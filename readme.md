@@ -30,4 +30,4 @@ Accessing this endpoint will return all of the shortened urls.
 ##### [`GET http://localhost:3000/api/v1/urls/:id`]
 
 ### Summary
-By replacing `:id` in the GET url you can retrieve an url by it's ID.
+By replacing `:id` in the GET url you can retrieve a url by it's ID.
