@@ -1,8 +1,5 @@
 # URL Shortener - Version 1
 This URL shortener creates a unique shortened URL based on a randomly generated string from Math.random();
-
-The version 0.9 API uses a URL based on the URL ID which should be provided by the database's auto-incrementing ID in the future version of that branch. This ensures absolutely unique URLs as the database should never create unique IDs.
-
 <br>
 <br>
 # Installation
