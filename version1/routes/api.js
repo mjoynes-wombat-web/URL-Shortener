@@ -1,9 +1,20 @@
-module.exports = function(express){
-    var router = express.Router();
+module.exports = function(express){                     //Export the following function to be used by other modules.
+    var router = express.Router();                      //Set up router for this module.
 
-    router.get('/', function(req, res){
-        res.json({hello: 'world'});
+    //POST URLS
+    router.post('/urls', function(req, res){
+        res.json({hello: 'world'});                     //Placeholder response.
     });
 
-    return router;
+    //GET URLS
+    router.get('/urls', function(req, res){
+        res.json({urls: 'array of urls'});              //Placeholder response.
+    });
+
+    //GET URLS BY ID
+    router.get('/urls/:id', function(req, res){
+        res.json({urls: req.params.id});                //Placeholder response.
+    });
+
+    return router;                                      //Return the router.
 };
