@@ -22,9 +22,14 @@ By passing a URL to this address you will create a shortened URL.
 ### Sample Response
 ```
 {
-  "urlID": 91247125,
-  "origURL": "http://www.google.com/testing",
-  "shortURL": "http://localhost:3000/iAE49"
+  "status": {
+    "code": 201
+  },
+  "data": {
+    "urlId": 5,
+    "origURL": "http://www.google.com/testing",
+    "shortURL": "/1lswlzapf"
+  }
 }
 ```
 <br>
@@ -37,18 +42,23 @@ Accessing this endpoint will return all of the shortened urls.
 
 ### Sample Response
 ```
-[
-  {
-    "urlID": 1241,
-    "origURL": "https://www.amazon.com/dp/B00X4WHP5E/ref=ods_gw_ha_d_blackandwhite?pf_rd_r=QREX1YK8J8EMC8C05PYZ&pf_rd_p=da93a4f0-0b0d-45e0-bc19-b68113bc6936",
-    "shortURL": "http://localhost:3000/pn"
+{
+  "status": {
+    "code": 200
   },
-  {
-    "urlID": 8723461,
-    "origURL": "https://play.google.com/music/m/T4ztvelxav2rehzomrwhpdpkxcu?t=Tones_Of_Home_-_Blind_Melon",
-    "shortURL": "http://localhost:3000/vbHL"
-  }
-]
+  "data": [
+    {
+      "urlId": 123512,
+      "origURL": "https://www.amazon.com/dp/B00X4WHP5E/ref=ods_gw_ha_d_blackandwhite?pf_rd_r=QREX1YK8J8EMC8C05PYZ&pf_rd_p=da93a4f0-0b0d-45e0-bc19-b68113bc6936",
+      "shortURL": "/qtA"
+    },
+    {
+      "urlId": 98325,
+      "origURL": "https://play.google.com/music/m/T4ztvelxav2rehzomrwhpdpkxcu?t=Tones_Of_Home_-_Blind_Melon",
+      "shortURL": "/wet"
+    }
+  ]
+}
 ```
 <br>
 <br>
@@ -59,8 +69,15 @@ Accessing this endpoint will return all of the shortened urls.
 By replacing `:id` in the GET url you can retrieve a url by it's ID.
 
 ### Sample Response
-    {
-    "urlID": 1241,
+```
+{
+  "status": {
+    "code": 200
+  },
+  "data": {
+    "urlId": 1,
     "origURL": "https://www.amazon.com/dp/B00X4WHP5E/ref=ods_gw_ha_d_blackandwhite?pf_rd_r=QREX1YK8J8EMC8C05PYZ&pf_rd_p=da93a4f0-0b0d-45e0-bc19-b68113bc6936",
-    "shortURL": "http://localhost:3000/pn"
-    }
+    "shortURL": "/1"
+  }
+}
+```
