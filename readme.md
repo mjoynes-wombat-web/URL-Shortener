@@ -28,7 +28,7 @@ By passing a URL to this address you will create a shortened URL.
   "urls": {
     "urlId": 5,
     "origURL": "http://www.google.com/testing",
-    "shortURL": "/1lswlzapf"
+    "shortURL": "/wu4vlflt3"
   }
 }
 ```
@@ -48,14 +48,14 @@ Accessing this endpoint will return all of the shortened urls.
   },
   "urls": [
     {
-      "urlId": 123512,
+      "urlId": 1,
       "origURL": "https://www.amazon.com/dp/B00X4WHP5E/ref=ods_gw_ha_d_blackandwhite?pf_rd_r=QREX1YK8J8EMC8C05PYZ&pf_rd_p=da93a4f0-0b0d-45e0-bc19-b68113bc6936",
-      "shortURL": "/qtA"
+      "shortURL": "/ftx"
     },
     {
-      "urlId": 98325,
+      "urlId": 2,
       "origURL": "https://play.google.com/music/m/T4ztvelxav2rehzomrwhpdpkxcu?t=Tones_Of_Home_-_Blind_Melon",
-      "shortURL": "/wet"
+      "shortURL": "/6g"
     }
   ]
 }
@@ -77,7 +77,7 @@ By replacing `:id` in the GET url you can retrieve a url by it's ID.
   "urls": {
     "urlId": 1,
     "origURL": "https://www.amazon.com/dp/B00X4WHP5E/ref=ods_gw_ha_d_blackandwhite?pf_rd_r=QREX1YK8J8EMC8C05PYZ&pf_rd_p=da93a4f0-0b0d-45e0-bc19-b68113bc6936",
-    "shortURL": "/1"
+    "shortURL": "/ftx"
   }
 }
 ```
