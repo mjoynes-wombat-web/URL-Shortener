@@ -39,7 +39,6 @@ module.exports = (express) => {                     //Export the following funct
         res.setHeader('Content-Type', 'application/json');
 
         for (var u in urls){
-            console.log(urls[u]);
             if (urls[u].urlID == req.params.id){
                 res.json(urls[u]);
                 break;
