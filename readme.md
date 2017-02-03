@@ -1,9 +1,9 @@
 # URL Shortener - Version 1
-This URL shortener creates a unique shortened URL based on an ID that will be provided by auto incremented IDs form the urlsbase in the next version.
+This URL shortener creates a unique shortened URL based on a randomly generated string from Math.random();
 <br>
 <br>
 # Installation
-Use `npm install` in the main directory to install the project and it's dependancies.
+Use `npm install` in the main directory to install the project and its dependencies.
 <br>
 <br>
 # API Access
@@ -17,7 +17,7 @@ By passing a URL to this address you will create a shortened URL.
 ### Parameters
   Name  |  Located In  |  Description
 --------|--------------|-------------
-   url  |     body     |  Pass in a url to be shortened.
+   url  |     body     |  Pass in a URL to be shortened.
 
 ### Sample Response
 ```
@@ -38,7 +38,7 @@ By passing a URL to this address you will create a shortened URL.
 #### [`GET http://localhost:3000/api/v1/urls`]
 
 ### Summary
-Accessing this endpoint will return all of the shortened urls.
+Accessing this endpoint will return all of the shortened URLs.
 
 ### Sample Response
 ```
@@ -66,7 +66,7 @@ Accessing this endpoint will return all of the shortened urls.
 ##### [`GET http://localhost:3000/api/v1/urls/:id`]
 
 ### Summary
-By replacing `:id` in the GET url you can retrieve a url by it's ID.
+By replacing `:id` in the GET URL you can retrieve a URL by its ID.
 
 ### Sample Response
 ```
