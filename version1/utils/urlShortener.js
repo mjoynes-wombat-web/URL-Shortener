@@ -3,7 +3,7 @@ var alphabet = '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
 var alphaLen = alphabet.length;
 var exports = module.exports = {};
 
-exports.shorten = function (int){
+exports.shorten = (int) => {
     var short = '';
 
     while (int){
