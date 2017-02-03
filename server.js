@@ -1,15 +1,15 @@
 //INIT
 var express = require('express');                                   //Retrieve Express.
-var bodyParser = require('body-parser');                           //Retrieve Body-Parser.
+var bodyParser = require('body-parser');                            //Retrieve Body-Parser.
 var app = express();                                                //Setup application from Express.
 
 //CONFIG
-var port = 3000;    
+var port = 3000;                                                    //Port for server.
 
-app.use(bodyParser.json());
+app.use(bodyParser.json());                                         //Setting up body-parser for json creation.
 app.use(bodyParser.urlencoded({
     extended: true,
-}));                                                //Port for server.
+}));                                                
 
 app.use('/api/v1', require('./version1/routes/api.js')(express));   //Pull in routes from api.js and set their root url to api/v1.
 
