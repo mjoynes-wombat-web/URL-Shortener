@@ -3,7 +3,7 @@ This URL shortener creates a unique shortened URL based on an ID that will be pr
 <br>
 <br>
 # Installation
-Use [`npm install`] in the main directory to install the project and it's dependancies.
+Use `npm install` in the main directory to install the project and it's dependancies.
 <br>
 <br>
 # API Access
