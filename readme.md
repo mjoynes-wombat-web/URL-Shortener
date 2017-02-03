@@ -1,5 +1,5 @@
 # URL Shortener - Version 1
-This URL shortener creates a unique shortened URL based on an ID that will be provided by auto incremented IDs form the database in the next version.
+This URL shortener creates a unique shortened URL based on an ID that will be provided by auto incremented IDs form the urlsbase in the next version.
 <br>
 <br>
 # Installation
@@ -25,7 +25,7 @@ By passing a URL to this address you will create a shortened URL.
   "status": {
     "code": 201
   },
-  "data": {
+  "urls": {
     "urlId": 5,
     "origURL": "http://www.google.com/testing",
     "shortURL": "/1lswlzapf"
@@ -46,7 +46,7 @@ Accessing this endpoint will return all of the shortened urls.
   "status": {
     "code": 200
   },
-  "data": [
+  "urls": [
     {
       "urlId": 123512,
       "origURL": "https://www.amazon.com/dp/B00X4WHP5E/ref=ods_gw_ha_d_blackandwhite?pf_rd_r=QREX1YK8J8EMC8C05PYZ&pf_rd_p=da93a4f0-0b0d-45e0-bc19-b68113bc6936",
@@ -74,7 +74,7 @@ By replacing `:id` in the GET url you can retrieve a url by it's ID.
   "status": {
     "code": 200
   },
-  "data": {
+  "urls": {
     "urlId": 1,
     "origURL": "https://www.amazon.com/dp/B00X4WHP5E/ref=ods_gw_ha_d_blackandwhite?pf_rd_r=QREX1YK8J8EMC8C05PYZ&pf_rd_p=da93a4f0-0b0d-45e0-bc19-b68113bc6936",
     "shortURL": "/1"

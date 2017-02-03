@@ -28,7 +28,7 @@ module.exports = (express) => {                     //Export the following funct
                 status: {
                     code: 201
                 },
-                data: postURL
+                urls: postURL
             });
         } else {                                                //Otherwise respond with missing URL error.
             res.setHeader('Content-Type', 'application/json');  //Set the response content type to JSON.
@@ -49,7 +49,7 @@ module.exports = (express) => {                     //Export the following funct
                 status: {
                     code: 200
                 },
-                data: urls
+                urls: urls
             });
         } else {                                //Otherwise respond with missing URLS error message.
             res.setHeader('Content-Type', 'application/json');  //Set the response content type to JSON.
@@ -71,7 +71,7 @@ module.exports = (express) => {                     //Export the following funct
                     status: {
                         code: 200
                     },
-                    data: urls[u]
+                    urls: urls[u]
                 });                                  //Respond with the matching URL information.
             }
         }
