@@ -16,15 +16,15 @@ By passing a URL to this address you will create a shortened URL.
   Name  |  Located In  |  Description
 --------|--------------|-------------
    url  |     body     |  Pass in a url to be shortened.
-
-
+<br>
+<br>
 ### Accessing All URLs.
 #### [`GET http://localhost:3000/api/v1/urls`]
 
 #### Summary
 Accessing this endpoint will return all of the shortened urls.
-
-
+<br>
+<br>
 ### Accessing URL by ID.
 ##### [`GET http://localhost:3000/api/v1/urls/:id`]
 
