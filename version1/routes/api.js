@@ -1,9 +1,17 @@
+var urlShortener = require('../utils/urlShortener.js');
+
 module.exports = function(express){                     //Export the following function to be used by other modules.
     var router = express.Router();                      //Set up router for this module.
 
     //POST URLS
     router.post('/urls', function(req, res){
-        res.json({hello: 'world'});                     //Placeholder response.
+        urlID = 91247125;
+        
+        res.json({
+            urlID: urlID,
+            origURL: req.body.url,
+            shortURL: 'http://localhost:3000/' + urlShortener.shorten(urlID)
+        });
     });
 
     //GET URLS
