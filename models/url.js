@@ -1,19 +1,35 @@
 const db = require('./db');
 
-exports.add = (data, error, success) => {
+function add (data, error, success) {
     const duplicateURL = true;
     db.url.find({
         where: {
             URL: data.URL
         }
-    }).then( (existingData) => {
-        if (existingData !== null){
+    }).then((existingData) => {
+        if (existingData !== null) {
             success(existingData);
         } else {
-            db.url.create(data).then(success).catch(error);
+            db.url.find({
+                where: {
+                    shortURL: data.shortURL
+                }
+            }).then((duplicateURL) => {
+                if (duplicateURL !== null) {
+                    console.log(data);
+                    data.shortURL = Math.random().toString(36).substr(2, Math.floor(Math.random() * (10 - 1) + 1));
+                    console.log(data);
+                    add(data, error, success);
+                } else {
+                    db.url.create(data).then(success).catch(error);
+                }
+            })
         }
     });
-};
+}
+
+exports.add = add;
+
 
 exports.update = (data, error, success) => {
     db.url.find({
