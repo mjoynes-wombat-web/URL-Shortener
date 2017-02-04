@@ -7,15 +7,6 @@ class URL {                                                         //Setup URL 
     }
 }
 
-
-
-// let urls = [];                                                      //Setup urls array to hold the URLs created form the URL class.
-
-// urls.push(new URL(1, "https://www.amazon.com/dp/B00X4WHP5E/ref=ods_gw_ha_d_blackandwhite?pf_rd_r=QREX1YK8J8EMC8C05PYZ&pf_rd_p=da93a4f0-0b0d-45e0-bc19-b68113bc6936"));   //Adding in static URLs for version 1.
-// urls.push(new URL(2, "https://play.google.com/music/m/T4ztvelxav2rehzomrwhpdpkxcu?t=Tones_Of_Home_-_Blind_Melon"));
-// urls.push(new URL(3, "https://inbox.google.com"));
-// urls.push(new URL(4, "https://www.facebook.com"));
-
 module.exports = (express) => {                     //Export the following function to be used by other modules.
     const router = express.Router();                  //Set up router for this module.
 
@@ -28,13 +19,13 @@ module.exports = (express) => {                     //Export the following funct
                 //Otherwise respond with missing URL error.
                 res.setHeader('Content-Type', 'application/json');  //Set the response content type to JSON.
                 res.status(500).json(error);
-            }, (urls) => {
+            }, (url) => {
                 res.setHeader('Content-Type', 'application/json');  //Set the response content type to JSON.
                 res.status(201).json({                  //Respond back with created status and the url object.
                     status: {
                         code: 201
                     },
-                    urls: [urls]
+                    urls: [url]
                 });
             });
         } else {
@@ -50,23 +41,28 @@ module.exports = (express) => {                     //Export the following funct
 
     //GET URLS
     router.get('/urls', (req, res) => {
-        if (urls.length) {                                      //If there are URLs in the urls array.
-            res.setHeader('Content-Type', 'application/json');  //Set the response content type to JSON.
-            res.status(200).json({                              //Return the status and the urls array.
-                status: {
-                    code: 200
-                },
-                urls: urls
-            });
-        } else {                                //Otherwise respond with missing URLS error message.
-            res.setHeader('Content-Type', 'application/json');  //Set the response content type to JSON.
-            res.status(404).json({
-                status: {
-                    code: 404,
-                    error: 'There are no urls.'
-                }
-            });
-        }
+        url.findUrls((error) => {
+            res.setHeader('Content-Type', 'application/json');
+            res.status(500).json(error);
+        }, (urls) => {
+            if (urls.length) {                                      //If there are URLs in the urls array.
+                res.setHeader('Content-Type', 'application/json');  //Set the response content type to JSON.
+                res.status(200).json({                              //Return the status and the urls array.
+                    status: {
+                        code: 200
+                    },
+                    urls: urls
+                });
+            } else {                                //Otherwise respond with missing URLS error message.
+                res.setHeader('Content-Type', 'application/json');  //Set the response content type to JSON.
+                res.status(404).json({
+                    status: {
+                        code: 404,
+                        error: 'There are no urls.'
+                    }
+                });
+            }
+        });
     });
 
     //GET URLS BY ID

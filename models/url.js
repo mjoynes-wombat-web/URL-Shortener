@@ -15,7 +15,7 @@ exports.update = (data, error, success) =>{
 };
 
 exports.findUrls = (error, success) => {
-    db.url.findAll().then(success).catch(err);
+    db.url.findAll().then(success).catch(error);
 };
 
 exports.findUrl = (data, error, success) => {

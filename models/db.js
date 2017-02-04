@@ -14,7 +14,7 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
     logging: false,
 });
 
-const url = sequelize.define('', {
+const url = sequelize.define('urls', {
     URL: {
         type: Sequelize.STRING,
     },
