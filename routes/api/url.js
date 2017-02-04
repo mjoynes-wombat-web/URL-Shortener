@@ -3,7 +3,7 @@ const url = require('../../models/url.js');
 class URL {    //Setup URL class.
     constructor(URL) {
         this.URL = URL;    //Original URL variable.
-        this.shortURL = '/' + Math.random().toString(36).substr(2, Math.floor(Math.random() * (10 - 1) + 1));    //Creates shortened url from Math.random()
+        this.shortURL = Math.random().toString(36).substr(2, Math.floor(Math.random() * (10 - 1) + 1));    //Creates shortened url from Math.random()
     }
 }
 
@@ -68,7 +68,7 @@ module.exports = (express) => {    //Export the following function to be used by
             res.status(500).json(error);
         }, 
         (url) => {
-            if (url != null) {
+            if (url !== null) {
                 res.status(200).json({              //Respond with the url.
                     status: {
                         code: 200
