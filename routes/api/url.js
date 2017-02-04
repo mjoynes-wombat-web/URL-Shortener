@@ -93,23 +93,28 @@ module.exports = (express) => {                     //Export the following funct
     router.post('/urls/:id', (req, res) => {
         req.body.id = req.params.id;
 
-        url.update(req.body, (error) =>{
-            res.status(500).json(error);
-        }, (url) => {
-            res.status(200).json({              //Respond with the url.
-                status: {
-                    code: 200
-                },
-                urls: [url]
-            });       //Respond with the matching URL information.
-        }, () => {
-            res.status(404).json({                  //Respond with no url with the ID error message.
-                status: {
-                    code: 404,
-                    error: 'There is no url with the id ' + req.body.id + '.'
-                }
+        url.update(
+            req.body, 
+            (error) => {
+                res.status(500).json(error);
+            },
+            (url) => {
+                console.log(url);
+                res.status(200).json({              //Respond with the url.
+                    status: {
+                        code: 200
+                    },
+                    urls: [url]
+                });       //Respond with the matching URL information.
             });
-        });
+            // () => {
+            //     res.status(404).json({                  //Respond with no url with the ID error message.
+            //         status: {
+            //             code: 404,
+            //             error: 'There is no url with the id ' + req.body.id + '.'
+            //         }
+            //     });
+            // });
     });
 
     return router;                                      //Return the router.

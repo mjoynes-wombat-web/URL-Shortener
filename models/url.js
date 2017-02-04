@@ -4,19 +4,22 @@ exports.add = (data, error, success) => {
     db.url.create(data).then(success).catch(error);
 };
 
-exports.update = (data, error, success, noData) =>{
+exports.update = (data, error, success) => {
     db.url.find({
         where: {
             id: data.id
         }
-    }).then( (existingData) => {
-        if (existingData != null){
-            existingData.updateAttributes(data).then(success).catch(error);
+    })
+    .then( (existingData) => {
+        
+        if (existingData != null) {
+            existingData.updateAttributes(data).then(success);
         } else {
-            console.log("this ran");
-            noData();
+            console.log('Else ran');
+            return 404;
         }
-    });
+    })
+    .catch(error);
 };
 
 exports.findUrls = (error, success) => {
