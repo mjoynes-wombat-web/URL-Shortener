@@ -1,7 +1,9 @@
 const db = require('./db');
 
 exports.add = (data, error, success) => {
-    db.url.create(data).then(success).catch(error);
+    db.url.create(data)
+    .then(success)
+    .catch(error);
 };
 
 exports.update = (data, error, success) => {
@@ -11,19 +13,15 @@ exports.update = (data, error, success) => {
         }
     })
     .then( (existingData) => {
-        
-        if (existingData != null) {
-            existingData.updateAttributes(data).then(success);
-        } else {
-            console.log('Else ran');
-            return 404;
-        }
+        existingData.updateAttributes(data).then(success);
     })
     .catch(error);
 };
 
 exports.findUrls = (error, success) => {
-    db.url.findAll().then(success).catch(error);
+    db.url.findAll()
+    .then(success)
+    .catch(error);
 };
 
 exports.findUrl = (data, error, success) => {
@@ -36,7 +34,9 @@ exports.findUrl = (data, error, success) => {
             all: true,
             nested: true
         }]
-    }).then(success).catch(error);
+    })
+    .then(success)
+    .catch(error);
 };
 
 exports.destory = (data, error, success) => {
@@ -44,6 +44,8 @@ exports.destory = (data, error, success) => {
         where: {
             id: data.id
         }
-    }).then(success).catch(error);
+    })
+    .then(success)
+    .catch(error);
 };
 

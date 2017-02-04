@@ -1,27 +1,27 @@
 const url = require('../../models/url.js');
 
-class URL {                                                         //Setup URL class.
+class URL {    //Setup URL class.
     constructor(URL) {
-        this.URL = URL;     //Original URL variable.
-        this.shortURL = '/' + Math.random().toString(36).substr(2, Math.floor(Math.random() * (10 - 1) + 1));          //Creates shortened url from Math.random()
+        this.URL = URL;    //Original URL variable.
+        this.shortURL = '/' + Math.random().toString(36).substr(2, Math.floor(Math.random() * (10 - 1) + 1));    //Creates shortened url from Math.random()
     }
 }
 
-module.exports = (express) => {                     //Export the following function to be used by other modules.
-    const router = express.Router();                  //Set up router for this module.
+module.exports = (express) => {    //Export the following function to be used by other modules.
+    const router = express.Router();    //Set up router for this module.
 
     //POST URLS
     router.post('/urls', (req, res) => {
-        if (req.body.URL) {                         //If a URL was sent in the request body.
-            const postURL = new URL(req.body.URL);      //Creates shortened URL with the infromation submitted and the URL class.
+        if (req.body.URL) {    //If a URL was sent in the request body.
+            const postURL = new URL(req.body.URL);    //Creates shortened URL with the infromation submitted and the URL class.
 
-            url.add(postURL, (error) => {
-                //Otherwise respond with missing URL error.
-                res.setHeader('Content-Type', 'application/json');  //Set the response content type to JSON.
+            url.add(postURL, (error) => {    //Otherwise respond with missing URL error.
+                res.setHeader('Content-Type', 'application/json');    //Set the response content type to JSON.
                 res.status(500).json(error);
-            }, (url) => {
-                res.setHeader('Content-Type', 'application/json');  //Set the response content type to JSON.
-                res.status(201).json({                  //Respond back with created status and the url object.
+            }, 
+            (url) => {
+                res.setHeader('Content-Type', 'application/json');    //Set the response content type to JSON.
+                res.status(201).json({    //Respond back with created status and the url object.
                     status: {
                         code: 201
                     },
@@ -29,7 +29,7 @@ module.exports = (express) => {                     //Export the following funct
                 });
             });
         } else {
-            res.setHeader('Content-Type', 'application/json');  //Set the response content type to JSON.
+            res.setHeader('Content-Type', 'application/json');    //Set the response content type to JSON.
             res.status(422).json({
                 status: {
                     code: 422,
@@ -44,7 +44,8 @@ module.exports = (express) => {                     //Export the following funct
         url.findUrls((error) => {
             res.setHeader('Content-Type', 'application/json');
             res.status(500).json(error);
-        }, (urls) => {
+        }, 
+        (urls) => {
             if (urls.length) {                                      //If there are URLs in the urls array.
                 res.setHeader('Content-Type', 'application/json');  //Set the response content type to JSON.
                 res.status(200).json({                              //Return the status and the urls array.
@@ -71,7 +72,8 @@ module.exports = (express) => {                     //Export the following funct
 
         url.findUrl(urlId, (error) => {
             res.status(500).json(error);
-        }, (url) => {
+        }, 
+        (url) => {
             if (url != null) {
                 res.status(200).json({              //Respond with the url.
                     status: {
@@ -96,7 +98,13 @@ module.exports = (express) => {                     //Export the following funct
         url.update(
             req.body, 
             (error) => {
-                res.status(500).json(error);
+                console.log("This ran.");
+                res.status(404).json({                  //Respond with no url with the ID error message.
+                    status: {
+                        code: 404,
+                        error: 'There is no url with the id ' + req.body.id + '.'
+                    }
+                });
             },
             (url) => {
                 console.log(url);
@@ -106,15 +114,8 @@ module.exports = (express) => {                     //Export the following funct
                     },
                     urls: [url]
                 });       //Respond with the matching URL information.
-            });
-            // () => {
-            //     res.status(404).json({                  //Respond with no url with the ID error message.
-            //         status: {
-            //             code: 404,
-            //             error: 'There is no url with the id ' + req.body.id + '.'
-            //         }
-            //     });
-            // });
+            }
+        );
     });
 
     return router;                                      //Return the router.
