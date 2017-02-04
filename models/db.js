@@ -9,7 +9,7 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
     pool: {
         max: 5,
         min: 0,
-        idel: 10000,
+        idle: 10000,
     },
     logging: false,
 });

@@ -27,7 +27,7 @@ exports.findUrls = (error, success) => {
 exports.findUrl = (data, error, success) => {
     db.url.find({
         where: {
-            id: data
+            id: data.id
         },
 
         include: [{
@@ -39,7 +39,7 @@ exports.findUrl = (data, error, success) => {
     .catch(error);
 };
 
-exports.destory = (data, error, success) => {
+exports.destroy = (data, error, success) => {
     db.url.destroy({
         where: {
             id: data.id

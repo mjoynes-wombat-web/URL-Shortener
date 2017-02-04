@@ -16,11 +16,9 @@ module.exports = (express) => {    //Export the following function to be used by
             const postURL = new URL(req.body.URL);    //Creates shortened URL with the infromation submitted and the URL class.
 
             url.add(postURL, (error) => {    //Otherwise respond with missing URL error.
-                res.setHeader('Content-Type', 'application/json');    //Set the response content type to JSON.
                 res.status(500).json(error);
             }, 
             (url) => {
-                res.setHeader('Content-Type', 'application/json');    //Set the response content type to JSON.
                 res.status(201).json({    //Respond back with created status and the url object.
                     status: {
                         code: 201
@@ -29,7 +27,6 @@ module.exports = (express) => {    //Export the following function to be used by
                 });
             });
         } else {
-            res.setHeader('Content-Type', 'application/json');    //Set the response content type to JSON.
             res.status(422).json({
                 status: {
                     code: 422,
@@ -42,12 +39,10 @@ module.exports = (express) => {    //Export the following function to be used by
     //GET URLS
     router.get('/urls', (req, res) => {
         url.findUrls((error) => {
-            res.setHeader('Content-Type', 'application/json');
             res.status(500).json(error);
         }, 
         (urls) => {
-            if (urls.length) {                                      //If there are URLs in the urls array.
-                res.setHeader('Content-Type', 'application/json');  //Set the response content type to JSON.
+            if (urls.length) {    //If there are URLs in the urls array.
                 res.status(200).json({                              //Return the status and the urls array.
                     status: {
                         code: 200
@@ -55,7 +50,6 @@ module.exports = (express) => {    //Export the following function to be used by
                     urls: urls
                 });
             } else {                                //Otherwise respond with missing URLS error message.
-                res.setHeader('Content-Type', 'application/json');  //Set the response content type to JSON.
                 res.status(404).json({
                     status: {
                         code: 404,
@@ -68,9 +62,9 @@ module.exports = (express) => {    //Export the following function to be used by
 
     //GET URLS BY ID
     router.get('/urls/:id', (req, res) => {
-        const urlId = req.params.id;                         //Grab the ID from the URL.
+        req.body.id = req.params.id;                         //Grab the ID from the URL.
 
-        url.findUrl(urlId, (error) => {
+        url.findUrl(req.body, (error) => {
             res.status(500).json(error);
         }, 
         (url) => {
@@ -85,7 +79,7 @@ module.exports = (express) => {    //Export the following function to be used by
                 res.status(404).json({                  //Respond with no url with the ID error message.
                     status: {
                         code: 404,
-                        error: 'There is no url with the id ' + urlId + '.'
+                        error: 'There is no url with the id ' + req.body.id + '.'
                     }
                 });
             }
@@ -107,13 +101,45 @@ module.exports = (express) => {    //Export the following function to be used by
                 });
             },
             (url) => {
-                console.log(url);
                 res.status(200).json({              //Respond with the url.
                     status: {
                         code: 200
                     },
                     urls: [url]
                 });       //Respond with the matching URL information.
+            }
+        );
+    });
+
+    router.delete('/urls/:id', (req, res) => {
+        req.body.id = req.params.id;
+
+        url.destroy(
+            req.body, 
+            (error) =>{
+                res.status(500).json(error);
+            },
+            (url) => {
+                if (url){
+                    res.status(200).json({
+                        status: {
+                            code: 200
+                        },
+                        urls: [
+                            {
+                                id: req.body.id,
+                                deleted: true
+                            }
+                        ]
+                    });
+                } else {
+                    res.status(404).json({
+                        status: {
+                            code: 404,
+                            error: 'There is no url with the id ' + req.body.id + '.'
+                        }
+                    });
+                }
             }
         );
     });
