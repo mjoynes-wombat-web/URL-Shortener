@@ -8,7 +8,7 @@ class URL {                                                         //Setup URL 
 
 
 
-var urls = [];                                                      //Setup urls array to hold the URLs created form the URL class.
+let urls = [];                                                      //Setup urls array to hold the URLs created form the URL class.
 
 urls.push(new URL(1, "https://www.amazon.com/dp/B00X4WHP5E/ref=ods_gw_ha_d_blackandwhite?pf_rd_r=QREX1YK8J8EMC8C05PYZ&pf_rd_p=da93a4f0-0b0d-45e0-bc19-b68113bc6936"));   //Adding in static URLs for version 1.
 urls.push(new URL(2, "https://play.google.com/music/m/T4ztvelxav2rehzomrwhpdpkxcu?t=Tones_Of_Home_-_Blind_Melon"));
@@ -16,7 +16,7 @@ urls.push(new URL(3, "https://inbox.google.com"));
 urls.push(new URL(4, "https://www.facebook.com"));
 
 module.exports = (express) => {                     //Export the following function to be used by other modules.
-    var router = express.Router();                  //Set up router for this module.
+    const router = express.Router();                  //Set up router for this module.
 
     //POST URLS
     router.post('/urls', (req, res) => {
@@ -64,7 +64,7 @@ module.exports = (express) => {                     //Export the following funct
 
     //GET URLS BY ID
     router.get('/urls/:id', (req, res) => {
-        var urlId = req.params.id;                         //Grab the ID from the URL.
+        const urlId = req.params.id;                         //Grab the ID from the URL.
         for (var u in urls) {                                //Loop through the arrays.
             if (urls[u].urlId == urlId) {            //If the ID from the URL matches the urlId .
                 res.status(200).json({              //Respond with the url.
