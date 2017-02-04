@@ -38,7 +38,6 @@ exports.findUrl = (data, error, success) => {
         where: {
             id: data.id
         },
-
         include: [{
             all: true,
             nested: true
@@ -52,6 +51,16 @@ exports.destroy = (data, error, success) => {
     db.url.destroy({
         where: {
             id: data.id
+        }
+    })
+    .then(success)
+    .catch(error);
+};
+
+exports.findFullUrl = (data, error, success) => {
+    db.url.find({
+        where: {
+            shortURL: data.shortURL
         }
     })
     .then(success)
