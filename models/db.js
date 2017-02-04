@@ -15,10 +15,10 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
 });
 
 const url = sequelize.define('', {
-    url: {
+    URL: {
         type: Sequelize.STRING,
     },
-    shortUrl: {
+    shortURL: {
         type: Sequelize.STRING,
     }
 });

@@ -1,19 +1,20 @@
+const url = require('../../models/url.js');
+
 class URL {                                                         //Setup URL class.
-    constructor(urlId, origURL) {
-        this.urlId = urlId;         //URL ID variable.
-        this.origURL = origURL;     //Original URL variable.
+    constructor(URL) {
+        this.URL = URL;     //Original URL variable.
         this.shortURL = '/' + Math.random().toString(36).substr(2, Math.floor(Math.random() * (10 - 1) + 1));          //Creates shortened url from Math.random()
     }
 }
 
 
 
-let urls = [];                                                      //Setup urls array to hold the URLs created form the URL class.
+// let urls = [];                                                      //Setup urls array to hold the URLs created form the URL class.
 
-urls.push(new URL(1, "https://www.amazon.com/dp/B00X4WHP5E/ref=ods_gw_ha_d_blackandwhite?pf_rd_r=QREX1YK8J8EMC8C05PYZ&pf_rd_p=da93a4f0-0b0d-45e0-bc19-b68113bc6936"));   //Adding in static URLs for version 1.
-urls.push(new URL(2, "https://play.google.com/music/m/T4ztvelxav2rehzomrwhpdpkxcu?t=Tones_Of_Home_-_Blind_Melon"));
-urls.push(new URL(3, "https://inbox.google.com"));
-urls.push(new URL(4, "https://www.facebook.com"));
+// urls.push(new URL(1, "https://www.amazon.com/dp/B00X4WHP5E/ref=ods_gw_ha_d_blackandwhite?pf_rd_r=QREX1YK8J8EMC8C05PYZ&pf_rd_p=da93a4f0-0b0d-45e0-bc19-b68113bc6936"));   //Adding in static URLs for version 1.
+// urls.push(new URL(2, "https://play.google.com/music/m/T4ztvelxav2rehzomrwhpdpkxcu?t=Tones_Of_Home_-_Blind_Melon"));
+// urls.push(new URL(3, "https://inbox.google.com"));
+// urls.push(new URL(4, "https://www.facebook.com"));
 
 module.exports = (express) => {                     //Export the following function to be used by other modules.
     const router = express.Router();                  //Set up router for this module.
@@ -21,16 +22,22 @@ module.exports = (express) => {                     //Export the following funct
     //POST URLS
     router.post('/urls', (req, res) => {
         if (req.body.url) {                         //If a URL was sent in the request body.
-            postURL = new URL(5, req.body.url);      //Creates shortened URL with the infromation submitted and the URL class.
+            const postURL = new URL(req.body.url);      //Creates shortened URL with the infromation submitted and the URL class.
 
-            res.setHeader('Content-Type', 'application/json');  //Set the response content type to JSON.
-            res.status(201).json({                  //Respond back with created status and the url object.
-                status: {
-                    code: 201
-                },
-                urls: postURL
+            url.add(postURL, (error) => {
+                //Otherwise respond with missing URL error.
+                res.setHeader('Content-Type', 'application/json');  //Set the response content type to JSON.
+                res.status(500).json(error);
+            }, (urls) => {
+                res.setHeader('Content-Type', 'application/json');  //Set the response content type to JSON.
+                res.status(201).json({                  //Respond back with created status and the url object.
+                    status: {
+                        code: 201
+                    },
+                    urls: [urls]
+                });
             });
-        } else {                                                //Otherwise respond with missing URL error.
+        } else {
             res.setHeader('Content-Type', 'application/json');  //Set the response content type to JSON.
             res.status(422).json({
                 status: {
