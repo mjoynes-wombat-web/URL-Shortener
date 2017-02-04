@@ -4,13 +4,18 @@ exports.add = (data, error, success) => {
     db.url.create(data).then(success).catch(error);
 };
 
-exports.update = (data, error, success) =>{
+exports.update = (data, error, success, noData) =>{
     db.url.find({
         where: {
             id: data.id
         }
     }).then( (existingData) => {
-        existingData.updateAttributes(data).then(success).catch(error);
+        if (existingData != null){
+            existingData.updateAttributes(data).then(success).catch(error);
+        } else {
+            console.log("this ran");
+            noData();
+        }
     });
 };
 
@@ -21,7 +26,7 @@ exports.findUrls = (error, success) => {
 exports.findUrl = (data, error, success) => {
     db.url.find({
         where: {
-            id: data.id
+            id: data
         },
 
         include: [{
@@ -31,11 +36,11 @@ exports.findUrl = (data, error, success) => {
     }).then(success).catch(error);
 };
 
-exports.destory = (data, err, success) => {
+exports.destory = (data, error, success) => {
     db.url.destroy({
         where: {
             id: data.id
         }
-    }).then(success).catch(err);
+    }).then(success).catch(error);
 };
 
