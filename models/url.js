@@ -1,9 +1,18 @@
 const db = require('./db');
 
 exports.add = (data, error, success) => {
-    db.url.create(data)
-    .then(success)
-    .catch(error);
+    const duplicateURL = true;
+    db.url.find({
+        where: {
+            URL: data.URL
+        }
+    }).then( (existingData) => {
+        if (existingData !== null){
+            success(existingData);
+        } else {
+            db.url.create(data).then(success).catch(error);
+        }
+    });
 };
 
 exports.update = (data, error, success) => {
