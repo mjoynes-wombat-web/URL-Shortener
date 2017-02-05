@@ -20,12 +20,12 @@ This application uses Sequelize for database access and dotenv for the database 
 
 ### .ENV File Example
 ```
->DB_NAME=*Your Database Name*
->DB_USER=*Your User Name*
->DB_PASS=*Your Password*
->DB_HOST=*Your Database Host Address*
->DB_SCHEMA=*Your Database Schema Type i.e. mysql*
->DB_PORT=*Your Database Port*
+DB_NAME=*Your Database Name*
+DB_USER=*Your User Name*
+DB_PASS=*Your Password*
+DB_HOST=*Your Database Host Address*
+DB_SCHEMA=*Your Database Schema Type i.e. mysql*
+DB_PORT=*Your Database Port*
 ```
 <br>
 <br>
