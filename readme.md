@@ -23,6 +23,7 @@ Use `npm install` in the main directory to install the project and its dependenc
 By `:shortenedURL` with one of the shortened URLs you will be redirected to the full URL that's stored in the database.
 <br>
 <br>
+<br>
 # API Access
 
 ## Creating a short URL.
