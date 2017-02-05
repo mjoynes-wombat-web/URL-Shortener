@@ -1,85 +1,83 @@
-const db = require('./db');
+const db = require('./db');    //Require the db code.
 
-function add (data, error, success) {
-    const duplicateURL = true;
-    db.url.find({
+//Create URL function.
+function add (data, error, success) {    //The add URL function takes the data to be entered, the error function and the success function.
+    db.url.find({    //Find any URL that matches.
         where: {
             URL: data.URL
         }
-    }).then((existingData) => {
-        if (existingData !== null) {
-            success(existingData);
-        } else {
-            db.url.find({
+    }).then((existingURL) => {    //Then pass the results to this function.
+        if (existingURL !== null) {    //If there is matching URLs then execute the success function and pass them to it.
+            success(existingURL);
+        } else {    //Otherwise continue checking the data.
+            db.url.find({    //Find any URL that has a matching shortURL.
                 where: {
                     shortURL: data.shortURL
                 }
-            }).then((duplicateURL) => {
-                if (duplicateURL !== null) {
-                    console.log(data);
+            }).then((duplicateURL) => {    //The pass any duplicate short URLs to this function.
+                if (duplicateURL !== null) {    //If there are duplicate short URLs then re-create the shortURL and restart the function.
                     data.shortURL = Math.random().toString(36).substr(2, Math.floor(Math.random() * (10 - 1) + 1));
-                    console.log(data);
                     add(data, error, success);
-                } else {
+                } else {    //If there are no duplicate short URLs then add the URL to the database and run success or if failed error.
                     db.url.create(data).then(success).catch(error);
                 }
-            })
+            });
         }
-    });
+    }).catch(error);  //If the find fails then run the error.
 }
 
-exports.add = add;
+exports.add = add;    //Export add to make it available.
 
-
-exports.update = (data, error, success) => {
-    db.url.find({
+//Update URL function
+exports.update = (data, error, success) => {    //The update URL function takes data, an error function, and a success function.
+    db.url.find({    //Find any urls that match the ID from the data.
         where: {
             id: data.id
         }
     })
-    .then( (existingData) => {
-        existingData.updateAttributes(data).then(success);
+    .then( (existingURL) => {    //Then update the existing URL with the new data and run success or if failed error.
+        existingURL.updateAttributes(data).then(success).catch(error);
     })
-    .catch(error);
+    .catch(error); //If the find fails then run the error.
 };
 
-exports.findUrls = (error, success) => {
-    db.url.findAll()
-    .then(success)
-    .catch(error);
+//Find All URL
+exports.findAllUrls = (error, success) => {    //The find all URLs function takes, an error function, and a success function.
+    db.url.findAll()    //Find All URLs.
+    .then(success)    //If successful run success.
+    .catch(error);    //If failed run error.
 };
 
-exports.findUrl = (data, error, success) => {
-    db.url.find({
-        where: {
-            id: data.id
-        },
-        include: [{
-            all: true,
-            nested: true
-        }]
-    })
-    .then(success)
-    .catch(error);
-};
-
-exports.destroy = (data, error, success) => {
-    db.url.destroy({
+//Find 1 URL
+exports.findUrl = (data, error, success) => {    //The find URL function takes data, an error function, and a success function.
+    db.url.find({    //Find a URL based on the ID from data.
         where: {
             id: data.id
         }
     })
-    .then(success)
-    .catch(error);
+    .then(success)   //If successful run success.
+    .catch(error);    //If failed run error.
 };
 
-exports.findFullUrl = (data, error, success) => {
-    db.url.find({
+//Delete URL
+exports.destroy = (data, error, success) => {    //The delete URL function takes data, an error function, and a success function.
+    db.url.destroy({    //Delete a URL based on the ID from data.
+        where: {
+            id: data.id
+        }
+    })
+    .then(success)    //If successful run success.
+    .catch(error);    //If failed run error.
+};
+
+//Find Full URL
+exports.findFullUrl = (data, error, success) => {    //The find full URL function takes data, an error function, and a success function.
+    db.url.find({    //Find a URL based on the short URL from data.
         where: {
             shortURL: data.shortURL
         }
     })
-    .then(success)
-    .catch(error);
+    .then(success)    //If successful run success.
+    .catch(error);    //If failed run error.
 };
 
