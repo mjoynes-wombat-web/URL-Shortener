@@ -117,7 +117,7 @@ By replacing `:id` in the GET URL you can retrieve a URL by its ID.
 ##### [`POST http://localhost:3000/api/v1/urls/:id`]
 
 ### Summary
-By replacing `:id` in the POST URL you can update the URL.
+By replacing `:id` in the POST URL you can pass a URL to this address and update the URL with that ID.
 
 ### Parameters
   Name  |  Located In  |  Description
@@ -147,7 +147,7 @@ By replacing `:id` in the POST URL you can update the URL.
 ##### [`DELETE http://localhost:3000/api/v1/urls/:id`]
 
 ### Summary
-By replacing `:id` in the DELETE URL you can update the URL.
+By replacing `:id` in the DELETE URL you can delete the URL with that ID.
 
 ### Sample Response
 ```
