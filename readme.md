@@ -5,7 +5,7 @@ This URL shortener creates a unique shortened URL based on a randomly generated 
 # Installation
 Use `npm install` in the main directory to install the project and its dependencies.
 
-### dependencies
+### Dependencies
 ```
 "body-parser": "^1.15.2",
 "dotenv": "^4.0.0",
