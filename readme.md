@@ -3,6 +3,7 @@ This URL shortener creates a unique shortened URL based on a randomly generated 
 <br>
 <br>
 # Installation
+## Node Setup
 Use `npm install` in the main directory to install the project and its dependencies.
 
 ### Dependencies
@@ -13,6 +14,17 @@ Use `npm install` in the main directory to install the project and its dependenc
 "mysql": "^2.11.1",
 "sequelize": "^3.24.3"
 ```
+
+## Database Access Environment Variables
+This application uses Sequelize for database access and dotenv for the database environment variables. The template.env file is a template for your environment variables. Enter your database access information into that file and save it as .env.
+
+### .ENV File Example
+>DB_NAME=*Your Database Name*
+>DB_USER=*Your User Name*
+>DB_PASS=*Your Password*
+>DB_HOST=*Your Database Host Address*
+>DB_SCHEMA=*Your Database Schema Type i.e. mysql*
+>DB_PORT=*Your Database Port*
 <br>
 <br>
 # GO Route
