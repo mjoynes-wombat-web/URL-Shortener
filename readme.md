@@ -4,6 +4,15 @@ This URL shortener creates a unique shortened URL based on a randomly generated 
 <br>
 # Installation
 Use `npm install` in the main directory to install the project and its dependencies.
+
+### dependencies
+```
+"body-parser": "^1.15.2",
+"dotenv": "^4.0.0",
+"express": "^4.14.0",
+"mysql": "^2.11.1",
+"sequelize": "^3.24.3"
+```
 <br>
 <br>
 # GO Route
