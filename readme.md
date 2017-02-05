@@ -17,7 +17,7 @@ Use `npm install` in the main directory to install the project and its dependenc
 <br>
 # GO Route
 ## Accessing a shortened URL.
-#### [`http://localhost:3000/go/:shortenedURL]
+#### [`http://localhost:3000/go/:shortenedURL`]
 
 ### Summary
 By `:shortenedURL` with one of the shortened URLs you will be redirected to the full URL that's stored in the database.
