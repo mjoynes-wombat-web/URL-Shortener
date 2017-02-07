@@ -7,3 +7,5 @@ Icon*
 .env.json
 out
 build
+.vscode
+.eslintrc.json

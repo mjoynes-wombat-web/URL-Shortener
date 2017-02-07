@@ -15,4 +15,5 @@ app.use('/', require('./routes')(express));    //Pull in routes from api.js v1 a
 
 exports.server = app.listen(port, () => {    //Setup server to run on the configed port and console out success.
     console.log('Sever active on', port + '.');
+    console.log('Testing branching in git')
 });
