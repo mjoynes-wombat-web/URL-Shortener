@@ -28,10 +28,8 @@ module.exports = (express) => {    // Export the following function to be used b
               code: 201,
             },
             urls: [u],
-          },
-          );
-        },
-      );
+          });
+        });
     } else {    // Otherwise if there was no URL.
       // Respond with an unprocessable entity error and missing url error message.
       res.status(422).json({
@@ -65,8 +63,7 @@ module.exports = (express) => {    // Export the following function to be used b
             },
           });
         }
-      },
-    );
+      });
   });
 
   // GET URLS BY ID
@@ -95,8 +92,7 @@ module.exports = (express) => {    // Export the following function to be used b
               },
             });
           }
-        },
-      );
+        });
   });
 
   // POST URL UPDATE BY ID
@@ -122,8 +118,7 @@ module.exports = (express) => {    // Export the following function to be used b
           },
           urls: [u],
         });
-      },
-    );
+      });
   });
 
   router.delete('/urls/:id', (req, res) => {
@@ -158,8 +153,7 @@ module.exports = (express) => {    // Export the following function to be used b
               },
             });
           }
-        },
-    );
+        });
   });
 
   return router;    // Return the router.
