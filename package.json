@@ -14,5 +14,10 @@
     "express": "^4.14.0",
     "mysql": "^2.11.1",
     "sequelize": "^3.24.3"
+  },
+  "devDependencies": {
+    "eslint": "^3.15.0",
+    "eslint-config-airbnb-base": "^11.1.0",
+    "eslint-plugin-import": "^2.2.0"
   }
 }
