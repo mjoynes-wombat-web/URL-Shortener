@@ -12,7 +12,7 @@ module.exports = (express) => {    // Export the following function to be used b
   const router = express.Router();    // Set up router for this module.
 
   // POST URL CREATION
-  router.post('/urls', (req, res) => {
+  router.post('/urls', (req, res, next) => {
     if (req.body.URL) {    // If a URL was sent in the request body.
       // Creates shortened URL with the information submitted and the URL class.
       const postURL = new URL(req.body.URL);
@@ -23,6 +23,7 @@ module.exports = (express) => {    // Export the following function to be used b
           res.status(500).json(error);    // It responds with a server error and the error message.
         },
         (u) => {    // The success function takes the data from a url.
+          res.setHeader('Content-Type', 'application/json');
           res.status(201).json({    // It responds with a created status and the url object.
             status: {
               code: 201,
@@ -39,10 +40,11 @@ module.exports = (express) => {    // Export the following function to be used b
         },
       });
     }
+    next();
   });
 
   // GET URLS
-  router.get('/urls', (req, res) => {
+  router.get('/urls', (req, res, next) => {
     url.findAllUrls(    // Run url findAllUrls passing it an error function and a success function.
       (error) => {    // The error function accepts an error message.
         res.status(500).json(error);     // It responds with a server error and the error message.
@@ -64,12 +66,13 @@ module.exports = (express) => {    // Export the following function to be used b
           });
         }
       });
+    next();
   });
 
   // GET URLS BY ID
-  router.get('/urls/:id', (req, res) => {
+  router.get('/urls/:id', (req, res, next) => {
     const request = req;
-    request.body.id = request.params.id;    // Grab the ID from the URL.
+    req.body.id = req.params.id;    // Grab the ID from the URL.
     // Run url findURL passing it the url data, an error function, and a success function.
     url.findUrl(
       request.body,
@@ -88,15 +91,16 @@ module.exports = (express) => {    // Export the following function to be used b
             res.status(404).json({
               status: {
                 code: 404,
-                error: `There is no url with the id ${request.body.id}.`,
+                error: `There is no url with the id ${req.body.id}.`,
               },
             });
           }
         });
+    next();
   });
 
   // POST URL UPDATE BY ID
-  router.post('/urls/:id', (req, res) => {
+  router.post('/urls/:id', (req, res, next) => {
     const request = req;
     request.body.id = request.params.id;    // Grab the ID from the URL.
     // Run url update passing it the url data, an error function, and a success function.
@@ -119,9 +123,10 @@ module.exports = (express) => {    // Export the following function to be used b
           urls: [u],
         });
       });
+    next();
   });
 
-  router.delete('/urls/:id', (req, res) => {
+  router.delete('/urls/:id', (req, res, next) => {
     const request = req;
     request.body.id = request.params.id;    // Grab the ID form the URL.
     // Run url destroy passing it the url data, an error function, and a success function.
@@ -154,6 +159,7 @@ module.exports = (express) => {    // Export the following function to be used b
             });
           }
         });
+    next();
   });
 
   return router;    // Return the router.
