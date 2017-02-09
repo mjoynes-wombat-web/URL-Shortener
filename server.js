@@ -1,6 +1,7 @@
 // INIT
 const express = require('express'); // Retrieve Express.
 const bodyParser = require('body-parser'); // Retrieve Body-Parser.
+const log = require('./utils/log'); // Retrieve the logger.
 
 const app = express(); // Setup application from Express.
 
@@ -12,6 +13,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true,
 }));
+
+// Use the logger on the application.
+app.use(log);
 
 // Pull in routes from api.js v1 and set their root url to api/v1.
 app.use('/', require('./routes')(express));
