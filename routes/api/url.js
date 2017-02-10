@@ -182,6 +182,14 @@ module.exports = (express) => {    // Export the following function to be used b
     url.update(
       request.body,
       () => {    // The error function accepts an error message.
+        // Log out no url with id message.
+        log.debug({
+          logMsg: `There is no url with the id ${request.body.id}.`,
+          method: req.method,
+          url: (req.baseUrl + req.url),
+          ip: req.ip,
+          level: 'ERROR',
+        });
         // Respond with not found error and no url with the ID error message.
         res.status(404).json({
           status: {
@@ -191,6 +199,14 @@ module.exports = (express) => {    // Export the following function to be used b
         });
       },
       (u) => {    // The success function takes the updated data from a url.
+        // Log out update URL message.
+        log.debug({
+          logMsg: `Updated URL with the id of ${request.body.id} to redirect to ${u.URL}.`,
+          method: req.method,
+          url: (req.baseUrl + req.url),
+          ip: req.ip,
+          level: 'INFO',
+        });
         res.status(200).json({    // Respond with the ok status and update URL.
           status: {
             code: 200,
