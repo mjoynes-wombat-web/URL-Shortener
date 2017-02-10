@@ -21,9 +21,26 @@ module.exports = (express) => {    // Export the following function to be used b
       url.add(    // Run url add passing it the url data, an error function and a success function.
         postURL,
         (error) => {    // The error function takes an error message.
+          // Log out server error.
+          log.debug({
+            logMsg: error,
+            method: req.method,
+            url: (req.baseUrl + req.url),
+            ip: req.ip,
+            level: 'ERROR',
+          });
+
           res.status(500).json(error);    // It responds with a server error and the error message.
         },
         (u) => {    // The success function takes the data from a url.
+          // Log out created short URL message.
+          log.debug({
+            logMsg: `Created a short URL for ${req.body.URL}.`,
+            method: req.method,
+            url: (req.baseUrl + req.url),
+            ip: req.ip,
+            level: 'INFO',
+          });
           res.setHeader('Content-Type', 'application/json');
           res.status(201).json({    // It responds with a created status and the url object.
             status: {
@@ -34,6 +51,14 @@ module.exports = (express) => {    // Export the following function to be used b
         });
     } else {    // Otherwise if there was no URL.
       // Respond with an unprocessable entity error and missing url error message.
+      // Log out missing URL message.
+      log.debug({
+        logMsg: 'No URL provided.',
+        method: req.method,
+        url: (req.baseUrl + req.url),
+        ip: req.ip,
+        level: 'ERROR',
+      });
       res.status(422).json({
         status: {
           code: 422,
@@ -48,9 +73,26 @@ module.exports = (express) => {    // Export the following function to be used b
     url.findAllUrls(    // Run url findAllUrls passing it an error function and a success function.
       (error) => {    // The error function accepts an error message.
         res.status(500).json(error);     // It responds with a server error and the error message.
+        // Log out server error.
+        log.debug({
+          logMsg: error,
+          method: req.method,
+          url: (req.baseUrl + req.url),
+          ip: req.ip,
+          level: 'ERROR',
+        });
       },
       (urls) => {    // The success function takes the data from the urls.
         if (urls.length) {    // If there are URLs.
+          // Log out the URLs found message.
+          log.debug({
+            logMsg: 'All URLs gathered.',
+            method: req.method,
+            url: (req.baseUrl + req.url),
+            ip: req.ip,
+            level: 'INFO',
+          });
+
           res.status(200).json({    // Return the ok status and the urls array.
             status: {
               code: 200,
@@ -58,6 +100,14 @@ module.exports = (express) => {    // Export the following function to be used b
             urls,
           });
         } else {    // Otherwise respond with no URLS error message.
+          // Log out no URLs message.
+          log.debug({
+            logMsg: 'There are no URLs in the database',
+            method: req.method,
+            url: (req.baseUrl + req.url),
+            ip: req.ip,
+            level: 'ERROR',
+          });
           res.status(404).json({
             status: {
               code: 404,
@@ -80,7 +130,7 @@ module.exports = (express) => {    // Export the following function to be used b
           res.status(500).json(error);     // It responds with a server error and the error message.
         },
         (u) => {    // The success function takes the data from a url.
-          // Use the logger on the application.
+          // Log out request.
           log.debug({
             logMsg: `Requested URL with the id of ${request.body.id}.`,
             method: req.method,
@@ -88,6 +138,7 @@ module.exports = (express) => {    // Export the following function to be used b
             ip: req.ip,
             level: 'INFO',
           });
+
           if (u !== null) {    // If the url is not null.
             res.status(200).json({              // Respond with the ok status and url.
               status: {
@@ -96,6 +147,7 @@ module.exports = (express) => {    // Export the following function to be used b
               urls: [u],
             });
           } else {  // Otherwise respond with no URLS of that id error message.
+            // Log out error.
             log.debug({
               logMsg: `There is no url with the id ${request.body.id}.`,
               method: req.method,
@@ -103,6 +155,7 @@ module.exports = (express) => {    // Export the following function to be used b
               ip: req.ip,
               level: 'ERROR',
             });
+
             res.status(404).json({
               status: {
                 code: 404,
