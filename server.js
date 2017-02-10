@@ -14,8 +14,6 @@ app.use(bodyParser.urlencoded({
   extended: true,
 }));
 
-
-
 // Pull in routes from api.js v1 and set their root url to api/v1.
 app.use('/', require('./routes')(express));
 

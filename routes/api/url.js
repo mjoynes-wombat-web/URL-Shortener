@@ -75,7 +75,7 @@ module.exports = (express) => {    // Export the following function to be used b
     req.body.id = req.params.id;    // Grab the ID from the URL.
     // Run url findURL passing it the url data, an error function, and a success function.
     url.findUrl(
-      request.body,
+      req.body,
         (error) => {    // The error function accepts an error message.
           res.status(500).json(error);     // It responds with a server error and the error message.
         },
@@ -96,6 +96,7 @@ module.exports = (express) => {    // Export the following function to be used b
             });
           }
         });
+    res.locals.test = 'test';
     next();
   });
 
