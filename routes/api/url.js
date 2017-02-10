@@ -88,11 +88,6 @@ module.exports = (express) => {    // Export the following function to be used b
             ip: req.ip,
             level: 'INFO',
           });
-          log.debug({
-            logMsg: `Requested URL with the id of ${request.body.id}.`,
-            url: (req.baseUrl + req.url),
-            ip: req.ip,
-          });
           if (u !== null) {    // If the url is not null.
             res.status(200).json({              // Respond with the ok status and url.
               status: {
@@ -101,6 +96,13 @@ module.exports = (express) => {    // Export the following function to be used b
               urls: [u],
             });
           } else {  // Otherwise respond with no URLS of that id error message.
+            log.debug({
+              logMsg: `There is no url with the id ${request.body.id}.`,
+              method: req.method,
+              url: (req.baseUrl + req.url),
+              ip: req.ip,
+              level: 'ERROR',
+            });
             res.status(404).json({
               status: {
                 code: 404,
