@@ -6,8 +6,8 @@ class URL {    // Setup URL class.
     this.URL = addr;    // Original URL variable.
     // Creates shortened url from Math.random()
     this.shortURL = Math.random()
-                                          .toString(36)
-                                          .substr(2, Math.floor((Math.random() * (10 - 1)) + 1));
+      .toString(36)
+      .substr(2, Math.floor((Math.random() * (10 - 1)) + 1));
   }
 }
 
@@ -212,42 +212,60 @@ module.exports = (express) => {    // Export the following function to be used b
       ip: request.ip,
       level: 'INFO',
     });
-    // Run url update passing it the url data, an error function, and a success function.
-    url.update(
-      request.body,
-      () => {    // The error function accepts an error message.
-        // Log out no url with id message.
-        log.debug({
-          logMsg: `There is no url with the id ${request.body.id}.`,
-          method: request.method,
-          url: (request.baseUrl + request.url),
-          ip: request.ip,
-          level: 'ERROR',
+    if (request.body.URL) {
+      // Run url update passing it the url data, an error function, and a success function.
+      url.update(
+        request.body,
+        () => {    // The error function accepts an error message.
+          // Log out no url with id message.
+          log.debug({
+            logMsg: `There is no url with the id ${request.body.id}.`,
+            method: request.method,
+            url: (request.baseUrl + request.url),
+            ip: request.ip,
+            level: 'ERROR',
+          });
+          // Respond with not found error and no url with the ID error message.
+          res.status(404).json({
+            status: {
+              code: 404,
+              error: `There is no url with the id ${request.body.id}.`,
+            },
+          });
+        },
+        (u) => {    // The success function takes the updated data from a url.
+          // Log out update URL by ID message.
+          log.debug({
+            logMsg: `Updated URL with the id of ${request.body.id} to redirect to ${u.URL}.`,
+            method: request.method,
+            url: (request.baseUrl + request.url),
+            ip: request.ip,
+            level: 'INFO',
+          });
+          res.status(200).json({    // Respond with the ok status and update URL.
+            status: {
+              code: 200,
+            },
+            urls: [u],
+          });
         });
-        // Respond with not found error and no url with the ID error message.
-        res.status(404).json({
-          status: {
-            code: 404,
-            error: `There is no url with the id ${request.body.id}.`,
-          },
-        });
-      },
-      (u) => {    // The success function takes the updated data from a url.
-        // Log out update URL by ID message.
-        log.debug({
-          logMsg: `Updated URL with the id of ${request.body.id} to redirect to ${u.URL}.`,
-          method: request.method,
-          url: (request.baseUrl + request.url),
-          ip: request.ip,
-          level: 'INFO',
-        });
-        res.status(200).json({    // Respond with the ok status and update URL.
-          status: {
-            code: 200,
-          },
-          urls: [u],
-        });
+    } else {
+      // Respond with an unprocessable entity error and missing url error message.
+      // Log out missing URL message.
+      log.debug({
+        logMsg: 'No URL provided.',
+        method: req.method,
+        url: (req.baseUrl + req.url),
+        ip: req.ip,
+        level: 'ERROR',
       });
+      res.status(422).json({
+        status: {
+          code: 422,
+          error: 'You did not provide a url.',
+        },
+      });
+    }
   });
 
   router.delete('/urls/:id', (req, res) => {
@@ -298,7 +316,7 @@ module.exports = (express) => {    // Export the following function to be used b
             ],
           });
         } else {    // If the response from the deleted URL wasn't true.
-        // Log out no URL with that ID.
+          // Log out no URL with that ID.
           log.debug({
             logMsg: `There is no url with the id ${request.body.id}.`,
             method: request.method,
