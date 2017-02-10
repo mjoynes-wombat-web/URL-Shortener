@@ -14,6 +14,13 @@ module.exports = (express) => {    // Export the following function to be used b
 
   // POST URL CREATION
   router.post('/urls', (req, res) => {
+    log.debug({
+            logMsg: `Attempting to create a short URL for ${req.body.URL}.`,
+            method: req.method,
+            url: (req.baseUrl + req.url),
+            ip: req.ip,
+            level: 'INFO',
+          });
     if (req.body.URL) {    // If a URL was sent in the request body.
       // Creates shortened URL with the information submitted and the URL class.
       const postURL = new URL(req.body.URL);
@@ -70,6 +77,13 @@ module.exports = (express) => {    // Export the following function to be used b
 
   // GET URLS
   router.get('/urls', (req, res) => {
+    log.debug({
+            logMsg: 'Requesting all URLs.',
+            method: req.method,
+            url: (req.baseUrl + req.url),
+            ip: req.ip,
+            level: 'INFO',
+          });
     url.findAllUrls(    // Run url findAllUrls passing it an error function and a success function.
       (error) => {    // The error function accepts an error message.
         res.status(500).json(error);     // It responds with a server error and the error message.
@@ -83,10 +97,11 @@ module.exports = (express) => {    // Export the following function to be used b
         });
       },
       (urls) => {    // The success function takes the data from the urls.
+        // Request all URLs
         if (urls.length) {    // If there are URLs.
           // Log out the URLs found message.
           log.debug({
-            logMsg: 'All URLs gathered.',
+            logMsg: 'Received URLs.',
             method: req.method,
             url: (req.baseUrl + req.url),
             ip: req.ip,
@@ -122,6 +137,14 @@ module.exports = (express) => {    // Export the following function to be used b
   router.get('/urls/:id', (req, res) => {
     const request = req;
     request.body.id = req.params.id;    // Grab the ID from the URL.
+    // Log out request.
+        log.debug({
+          logMsg: `Requested URL with the id of ${request.body.id}.`,
+          method: req.method,
+          url: (req.baseUrl + req.url),
+          ip: req.ip,
+          level: 'INFO',
+        });
 
     // Run url findURL passing it the url data, an error function, and a success function.
     url.findUrl(
@@ -138,16 +161,15 @@ module.exports = (express) => {    // Export the following function to be used b
         res.status(500).json(error);     // It responds with a server error and the error message.
       },
       (u) => {    // The success function takes the data from a url.
-        // Log out request.
-        log.debug({
-          logMsg: `Requested URL with the id of ${request.body.id}.`,
-          method: req.method,
-          url: (req.baseUrl + req.url),
-          ip: req.ip,
-          level: 'INFO',
-        });
-
         if (u !== null) {    // If the url is not null.
+          // Log out request.
+          log.debug({
+            logMsg: `Received URL info for ID ${request.body.id}.`,
+            method: req.method,
+            url: (req.baseUrl + req.url),
+            ip: req.ip,
+            level: 'INFO',
+          });
           res.status(200).json({              // Respond with the ok status and url.
             status: {
               code: 200,
@@ -178,6 +200,14 @@ module.exports = (express) => {    // Export the following function to be used b
   router.post('/urls/:id', (req, res) => {
     const request = req;
     request.body.id = request.params.id;    // Grab the ID from the URL.
+    // Log access.
+    log.debug({
+          logMsg: `Attempting to update URL with the id of ${request.body.id} to redirect to ${request.body.URL}.`,
+          method: req.method,
+          url: (req.baseUrl + req.url),
+          ip: req.ip,
+          level: 'INFO',
+        });
     // Run url update passing it the url data, an error function, and a success function.
     url.update(
       request.body,
@@ -219,6 +249,14 @@ module.exports = (express) => {    // Export the following function to be used b
   router.delete('/urls/:id', (req, res) => {
     const request = req;
     request.body.id = request.params.id;    // Grab the ID form the URL.
+    // Log access
+    log.debug({
+            logMsg: `Attempting to delete URL with the id of ${request.body.id}.`,
+            method: req.method,
+            url: (req.baseUrl + req.url),
+            ip: req.ip,
+            level: 'INFO',
+          });
     // Run url destroy passing it the url data, an error function, and a success function.
     url.destroy(
       req.body,
