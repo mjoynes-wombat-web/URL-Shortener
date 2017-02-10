@@ -17,10 +17,7 @@ app.use(bodyParser.urlencoded({
 // Pull in routes from api.js v1 and set their root url to api/v1.
 app.use('/', require('./routes')(express));
 
-// Use the logger on the application.
-app.use(log);
-
 // Setup server to run on the configured port and console out success.
 exports.server = app.listen(port, () => {
-  console.log(`Sever active on ${port} .`);
+  log.debug(`Sever active on ${port}.`, 'status', '', '', '');
 });

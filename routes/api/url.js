@@ -1,4 +1,5 @@
 const url = require('../../models/url.js');    // Grab URLs model.
+const log = require('../../utils/log'); // Retrieve the logger.
 
 class URL {    // Setup URL class.
   constructor(addr) {
@@ -12,7 +13,7 @@ module.exports = (express) => {    // Export the following function to be used b
   const router = express.Router();    // Set up router for this module.
 
   // POST URL CREATION
-  router.post('/urls', (req, res, next) => {
+  router.post('/urls', (req, res) => {
     if (req.body.URL) {    // If a URL was sent in the request body.
       // Creates shortened URL with the information submitted and the URL class.
       const postURL = new URL(req.body.URL);
@@ -40,11 +41,10 @@ module.exports = (express) => {    // Export the following function to be used b
         },
       });
     }
-    next();
   });
 
   // GET URLS
-  router.get('/urls', (req, res, next) => {
+  router.get('/urls', (req, res) => {
     url.findAllUrls(    // Run url findAllUrls passing it an error function and a success function.
       (error) => {    // The error function accepts an error message.
         res.status(500).json(error);     // It responds with a server error and the error message.
@@ -66,13 +66,14 @@ module.exports = (express) => {    // Export the following function to be used b
           });
         }
       });
-    next();
   });
 
   // GET URLS BY ID
-  router.get('/urls/:id', (req, res, next) => {
+  router.get('/urls/:id', (req, res) => {
     const request = req;
     req.body.id = req.params.id;    // Grab the ID from the URL.
+    // Use the logger on the application.
+    log.debug('test', 'status', req.method, req.url, req.ip);
     // Run url findURL passing it the url data, an error function, and a success function.
     url.findUrl(
       req.body,
@@ -96,12 +97,10 @@ module.exports = (express) => {    // Export the following function to be used b
             });
           }
         });
-    res.locals.test = 'test';
-    next();
   });
 
   // POST URL UPDATE BY ID
-  router.post('/urls/:id', (req, res, next) => {
+  router.post('/urls/:id', (req, res) => {
     const request = req;
     request.body.id = request.params.id;    // Grab the ID from the URL.
     // Run url update passing it the url data, an error function, and a success function.
@@ -124,10 +123,9 @@ module.exports = (express) => {    // Export the following function to be used b
           urls: [u],
         });
       });
-    next();
   });
 
-  router.delete('/urls/:id', (req, res, next) => {
+  router.delete('/urls/:id', (req, res) => {
     const request = req;
     request.body.id = request.params.id;    // Grab the ID form the URL.
     // Run url destroy passing it the url data, an error function, and a success function.
@@ -160,7 +158,6 @@ module.exports = (express) => {    // Export the following function to be used b
             });
           }
         });
-    next();
   });
 
   return router;    // Return the router.
