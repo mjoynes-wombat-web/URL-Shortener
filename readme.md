@@ -38,6 +38,21 @@ By `:shortenedURL` with one of the shortened URLs you will be redirected to the 
 <br>
 <br>
 <br>
+# Usage
+## Starting Application
+To start the application normally run `node server.js`.
+
+## Debugging
+The debugging logger messages for this application have 3 levels. They are error, info, and debug. Also messages are output to `./log/error.log`.
+
+To start the application with console debugging run `DEBUG=opt server.js` where you replace `opt` with one of the options below. This will output specific messages to the console.
+
+Debug Option | Debug Message Outputs
+---------------------|------------------------------------
+true | Outputs all debug messages.
+debug | Outputs all debug messages.
+info | Outputs the info, and error debug messages.
+error | Outputs the error debug messages.
 # API Access
 
 ## Creating a short URL.
