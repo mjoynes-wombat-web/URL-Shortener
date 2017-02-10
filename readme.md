@@ -29,15 +29,7 @@ DB_PORT=*Your Database Port*
 ```
 <br>
 <br>
-# GO Route
-## Accessing a shortened URL.
-#### [`http://localhost:3000/go/:shortenedURL`]
 
-### Summary
-By `:shortenedURL` with one of the shortened URLs you will be redirected to the full URL that's stored in the database.
-<br>
-<br>
-<br>
 # Usage
 ## Starting Application
 To start the application normally run `node server.js`.
@@ -53,6 +45,18 @@ true | Outputs all debug messages.
 debug | Outputs all debug messages.
 info | Outputs the info, and error debug messages.
 error | Outputs the error debug messages.
+<br>
+<br>
+
+# GO Route
+## Accessing a shortened URL.
+#### [`http://localhost:3000/go/:shortenedURL`]
+
+### Summary
+By `:shortenedURL` with one of the shortened URLs you will be redirected to the full URL that's stored in the database.
+<br>
+<br>
+<br>
 # API Access
 
 ## Creating a short URL.
