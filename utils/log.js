@@ -32,9 +32,19 @@ module.exports.debug = (info) => {
   let debugLogMsg = '';
 
   if (msg.url === '') {
-    debugLogMsg = `${time}\t${msg.ip}\t${msg.method}\t${msg.url}\t\t${msg.level}\t${msg.logMsg}`;
+    if (msg.ip.length < 10) {
+      debugLogMsg = `${time}\t${msg.ip}\t\t${msg.method}\t${msg.url}\t\t${msg.level}\t${msg.logMsg}`;
+    } else {
+      debugLogMsg = `${time}\t${msg.ip}\t${msg.method}\t${msg.url}\t\t${msg.level}\t${msg.logMsg}`;
+    }
   } else if (msg.url.length < 16) {
-    debugLogMsg = `${time}\t${msg.ip}\t${msg.method}\t${msg.url}\t\t${msg.level}\t${msg.logMsg}`;
+    if (msg.ip.length < 10) {
+      debugLogMsg = `${time}\t${msg.ip}\t\t${msg.method}\t${msg.url}\t\t${msg.level}\t${msg.logMsg}`;
+    } else {
+      debugLogMsg = `${time}\t${msg.ip}\t${msg.method}\t${msg.url}\t\t${msg.level}\t${msg.logMsg}`;
+    }
+  } else if (msg.ip.length < 10) {
+    debugLogMsg = `${time}\t${msg.ip}\t\t${msg.method}\t${msg.url}\t${msg.level}\t${msg.logMsg}`;
   } else {
     debugLogMsg = `${time}\t${msg.ip}\t${msg.method}\t${msg.url}\t${msg.level}\t${msg.logMsg}`;
   }
@@ -45,7 +55,7 @@ module.exports.debug = (info) => {
         if (writeErr) throw writeErr;
       });
     } else if (err.code === 'ENOENT') {
-      fs.appendFile(errorLog, `TIME\t\tIP\tMETHOD\tURL\t\tLEVEL\tMESSAGE\n${debugLogMsg}\n`, (writeErr) => {
+      fs.appendFile(errorLog, `TIME\t\tIP\t\tMETHOD\tURL\t\tLEVEL\tMESSAGE\n${debugLogMsg}\n`, (writeErr) => {
         if (writeErr) throw writeErr;
       });
     }
