@@ -71,16 +71,28 @@ module.exports = (express) => {    // Export the following function to be used b
   // GET URLS BY ID
   router.get('/urls/:id', (req, res) => {
     const request = req;
-    req.body.id = req.params.id;    // Grab the ID from the URL.
-    // Use the logger on the application.
-    log.debug('test', 'status', req.method, req.url, req.ip);
+    request.body.id = req.params.id;    // Grab the ID from the URL.
+
     // Run url findURL passing it the url data, an error function, and a success function.
     url.findUrl(
-      req.body,
+      request.body,
         (error) => {    // The error function accepts an error message.
           res.status(500).json(error);     // It responds with a server error and the error message.
         },
         (u) => {    // The success function takes the data from a url.
+          // Use the logger on the application.
+          log.debug({
+            logMsg: `Requested URL with the id of ${request.body.id}.`,
+            method: req.method,
+            url: (req.baseUrl + req.url),
+            ip: req.ip,
+            level: 'INFO',
+          });
+          log.debug({
+            logMsg: `Requested URL with the id of ${request.body.id}.`,
+            url: (req.baseUrl + req.url),
+            ip: req.ip,
+          });
           if (u !== null) {    // If the url is not null.
             res.status(200).json({              // Respond with the ok status and url.
               status: {
@@ -106,7 +118,7 @@ module.exports = (express) => {    // Export the following function to be used b
     // Run url update passing it the url data, an error function, and a success function.
     url.update(
       request.body,
-      (error) => {    // The error function accepts an error message.
+      () => {    // The error function accepts an error message.
         // Respond with not found error and no url with the ID error message.
         res.status(404).json({
           status: {

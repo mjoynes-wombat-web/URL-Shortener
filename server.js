@@ -19,5 +19,7 @@ app.use('/', require('./routes')(express));
 
 // Setup server to run on the configured port and console out success.
 exports.server = app.listen(port, () => {
-  log.debug(`Sever active on ${port}.`, 'status', '', '', '');
+  log.debug({
+    logMsg: `Sever active on ${port}.`,
+  });
 });
