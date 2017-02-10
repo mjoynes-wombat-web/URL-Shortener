@@ -21,5 +21,6 @@ app.use('/', require('./routes')(express));
 exports.server = app.listen(port, () => {
   log.debug({
     logMsg: `Sever active on ${port}.`,
+    level: 'INFO',
   });
 });
