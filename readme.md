@@ -1,4 +1,4 @@
-# URL Shortener - Version 1.1.1
+# URL Shortener - Version 1.3
 This URL shortener creates a unique shortened URL based on a randomly generated string from Math.random();
 <br>
 <br>
@@ -43,7 +43,7 @@ By `:shortenedURL` with one of the shortened URLs you will be redirected to the 
 To start the application normally run `node server.js`.
 
 ## Debugging
-The debugging logger messages for this application have 3 levels. They are error, info, and debug. Also messages are output to `./log/error.log`.
+The debugging logger messages for this application have 3 levels. They are error, info, and debug. Messages are output to `./log/error.log`.
 
 To start the application with console debugging run `DEBUG=opt server.js` where you replace `opt` with one of the options below. This will output specific messages to the console.
 
