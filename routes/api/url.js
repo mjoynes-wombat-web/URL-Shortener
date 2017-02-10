@@ -14,6 +14,7 @@ module.exports = (express) => {    // Export the following function to be used b
 
   // POST URL CREATION
   router.post('/urls', (req, res) => {
+    // Log out short URL creation attempt.
     log.debug({
             logMsg: `Attempting to create a short URL for ${req.body.URL}.`,
             method: req.method,
@@ -77,6 +78,7 @@ module.exports = (express) => {    // Export the following function to be used b
 
   // GET URLS
   router.get('/urls', (req, res) => {
+    // Log out find URLs attempt.
     log.debug({
             logMsg: 'Requesting all URLs.',
             method: req.method,
@@ -137,7 +139,7 @@ module.exports = (express) => {    // Export the following function to be used b
   router.get('/urls/:id', (req, res) => {
     const request = req;
     request.body.id = req.params.id;    // Grab the ID from the URL.
-    // Log out request.
+    // Log out find URL by id attempt.
         log.debug({
           logMsg: `Requested URL with the id of ${request.body.id}.`,
           method: req.method,
@@ -162,7 +164,7 @@ module.exports = (express) => {    // Export the following function to be used b
       },
       (u) => {    // The success function takes the data from a url.
         if (u !== null) {    // If the url is not null.
-          // Log out request.
+          // Log out found URL by ID.
           log.debug({
             logMsg: `Received URL info for ID ${request.body.id}.`,
             method: req.method,
@@ -177,7 +179,7 @@ module.exports = (express) => {    // Export the following function to be used b
             urls: [u],
           });
         } else {  // Otherwise respond with no URLS of that id error message.
-          // Log out error.
+          // Log out no URL with that ID.
           log.debug({
             logMsg: `There is no url with the id ${request.body.id}.`,
             method: req.method,
@@ -200,7 +202,7 @@ module.exports = (express) => {    // Export the following function to be used b
   router.post('/urls/:id', (req, res) => {
     const request = req;
     request.body.id = request.params.id;    // Grab the ID from the URL.
-    // Log access.
+    // Log out attempted update by ID.
     log.debug({
           logMsg: `Attempting to update URL with the id of ${request.body.id} to redirect to ${request.body.URL}.`,
           method: req.method,
@@ -229,7 +231,7 @@ module.exports = (express) => {    // Export the following function to be used b
         });
       },
       (u) => {    // The success function takes the updated data from a url.
-        // Log out update URL message.
+        // Log out update URL by ID message.
         log.debug({
           logMsg: `Updated URL with the id of ${request.body.id} to redirect to ${u.URL}.`,
           method: req.method,
@@ -249,7 +251,7 @@ module.exports = (express) => {    // Export the following function to be used b
   router.delete('/urls/:id', (req, res) => {
     const request = req;
     request.body.id = request.params.id;    // Grab the ID form the URL.
-    // Log access
+    // Log delete URL by ID attempt.
     log.debug({
             logMsg: `Attempting to delete URL with the id of ${request.body.id}.`,
             method: req.method,
@@ -273,7 +275,7 @@ module.exports = (express) => {    // Export the following function to be used b
       },
       (u) => {    // The success function takes the response from the deleted url.
         if (u) {    // If the response from the deleted URL is true.
-          // Respond with the OK status, the id of the delete url and deleted true.
+          // Log delete URL by ID success.
           log.debug({
             logMsg: `Deleted URL with the id of ${request.body.id}.`,
             method: req.method,
@@ -281,6 +283,7 @@ module.exports = (express) => {    // Export the following function to be used b
             ip: req.ip,
             level: 'INFO',
           });
+          // Respond with the OK status, the id of the delete url and deleted true.
           res.status(200).json({
             status: {
               code: 200,
@@ -293,6 +296,7 @@ module.exports = (express) => {    // Export the following function to be used b
             ],
           });
         } else {    // If the response from the deleted URL wasn't true.
+        //Log out no URL with that ID.
           log.debug({
             logMsg: `There is no url with the id ${request.body.id}.`,
             method: req.method,

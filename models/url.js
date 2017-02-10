@@ -4,6 +4,7 @@ const log = require('../utils/log'); // Retrieve the logger.
 // Create URL function.
 // The add URL function takes the data to be entered, the error function and the success function.
 function add(data, error, success) {
+  // Log find duplicate URL attempt.
   log.debug({
     logMsg: `Checking to see if ${data.URL} is already in the database.`,
     level: 'DEBUG',
@@ -15,6 +16,7 @@ function add(data, error, success) {
   }).then((existingURL) => {    // Then pass the results to this function.
     // If there is matching URLs then execute the success function and pass them to it.
     if (existingURL !== null) {
+      // Log duplicate URL.
       log.debug({
         logMsg: `The URL, ${data.URL}, already exists in the database. Returning it's information.`,
         level: 'DEBUG',
@@ -22,6 +24,7 @@ function add(data, error, success) {
       success(existingURL);
     // Otherwise continue checking the data.
   } else {
+    // Log find duplicate short URL attempt.
      log.debug({
     logMsg: `Checking to see if the short URL, ${data.shortURL}, already exists in the database.`,
     level: 'DEBUG',
@@ -33,6 +36,7 @@ function add(data, error, success) {
       }).then((duplicateURL) => {    // The pass any duplicate short URLs to this function.
         // If there are duplicate short URLs then re-create the shortURL and restart the function.
         if (duplicateURL !== null) {
+          // Log duplicate short URL.
           log.debug({
             logMsg: `The short URL ${data.shortURL}, already exists in the database. Recreating the short URL.`,
             level: 'DEBUG',
@@ -44,6 +48,7 @@ function add(data, error, success) {
           add(correctedData, error, success);
         // If there are no duplicate short URLs then add the URL to the database and run success or if failed error.
       } else {
+        // Log write URL attempt.
         log.debug({
     logMsg: `Attempting to add URL, ${data.URL}, with the short URL of ${data.shortURL}, to the database.`,
     level: 'DEBUG',
@@ -67,6 +72,7 @@ exports.update = (data, error, success) => {
   })
   // Then update the existing URL with the new data and run success or if failed error.
   .then((existingURL) => {
+    // Log update URL attempt.
     log.debug({
     logMsg: `Attempting to change the URL for ${data.id} to ${data.URL}in the database.`,
     level: 'DEBUG',
@@ -79,6 +85,7 @@ exports.update = (data, error, success) => {
 // Find All URL
 // The find all URLs function takes, an error function, and a success function.
 exports.findAllUrls = (error, success) => {
+  // Log find URLs attempt.
   log.debug({
     logMsg: 'Attempting to gather the URLs from the database.',
     level: 'DEBUG',
@@ -91,6 +98,7 @@ exports.findAllUrls = (error, success) => {
 // Find 1 URL
 // The find URL function takes data, an error function, and a success function.
 exports.findUrl = (data, error, success) => {
+  // Log find URL by ID attempt.
   log.debug({
     logMsg: `Attempting to find the URL for ID ${data.id} in the database.`,
     level: 'DEBUG',
@@ -107,6 +115,7 @@ exports.findUrl = (data, error, success) => {
 // Delete URL
 // The delete URL function takes data, an error function, and a success function.
 exports.destroy = (data, error, success) => {
+  // Log delete ULR by id attempt.
   log.debug({
     logMsg: `Attempting to delete the URL for ID ${data.id} from the database.`,
     level: 'DEBUG',
@@ -123,6 +132,7 @@ exports.destroy = (data, error, success) => {
 // Find Full URL
 // The find full URL function takes data, an error function, and a success function.
 exports.findFullUrl = (data, error, success) => {
+  // Log find URL by short URL attempt.
   log.debug({
     logMsg: `Attempting to find the URL for short URL, ${data.shortURL} in the database.`,
     level: 'DEBUG',

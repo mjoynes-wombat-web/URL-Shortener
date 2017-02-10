@@ -8,7 +8,14 @@ module.exports = (express) => {
   // GET URL GO REDIRECT
   router.get('/:shortURL', (req, res) => {
     req.body.shortURL = req.params.shortURL; // Grab the short URL from the url.
-
+    // Log access
+    log.debug({
+      logMsg: `Attempting to access the website at short URL /${req.body.shortURL}.`,
+      method: req.method,
+      url: (req.baseUrl + req.url),
+      ip: req.ip,
+      level: 'INFO',
+    });
     // Run url findFullUrl passing it the url data, an error function and a success function.
     url.findFullUrl(
       req.body,

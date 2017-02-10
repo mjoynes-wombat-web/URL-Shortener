@@ -1,61 +1,64 @@
-require('dotenv').config();
-const fs = require('fs');
-const chalk = require('chalk');
+require('dotenv').config(); // Require dotenv.
+const fs = require('fs'); // Require fs.
+const chalk = require('chalk'); // Require chalk.
 
-const time = new Date().toISOString();
+const time = new Date().toISOString(); // Get current date and time in ISO format.
 
-module.exports.debug = (info) => {
+// DEBUG LOG
+module.exports.debug = (info) => { // Export to Express.
+  // DEBUG MESSAGE CLASS
   class debugMsg {
     constructor(object) {
-      this.logMsg = object.logMsg;
-      this.method = object.method;
-      this.url = object.url;
-      this.ip = object.ip;
-      this.level = object.level;
+      this.logMsg = object.logMsg; // Message to log.
+      this.method = object.method; // Access method.
+      this.url = object.url; // Accessed URL.
+      this.ip = object.ip; // Access by IP.
+      this.level = object.level; // Message level.
     }
   }
 
-  // LEVELS
+  // AVAILABLE LEVELS
   //   INFO
   //   DEBUG
   //   ERROR
 
-  const msg = new debugMsg(info);
+  const msg = new debugMsg(info); // Create message from debugMsg class.
 
+  // Look through keys in the message.
   Object.keys(msg).forEach((key) => {
-    if (msg[key] === undefined) {
+    if (msg[key] === undefined) { // If any of the keys are undefined, set them to empty strings.
       msg[key] = '';
     }
   });
 
-  const errorLog = './logs/error.log';
-  let debugLogMsg = '';
+  const errorLog = './logs/error.log'; // Error log location.
+  let debugLogMsg; // Variable to hold the formatted error log message.
 
-  if (msg.url === '') {
-    if (msg.ip.length < 10) {
+  if (msg.url === '') { // If the URL is empty.
+    if (msg.ip.length < 10) { // If the ip is less than 10 characters, format the message this way.
       debugLogMsg = `${time}\t${msg.ip}\t\t${msg.method}\t${msg.url}\t\t${msg.level}\t${msg.logMsg}`;
-    } else {
+    } else { // Otherwise if the ip is longer than 10 characters, format the message this way.
       debugLogMsg = `${time}\t${msg.ip}\t${msg.method}\t${msg.url}\t\t${msg.level}\t${msg.logMsg}`;
     }
-  } else if (msg.url.length < 16) {
-    if (msg.ip.length < 10) {
+  } else if (msg.url.length < 16) { // Otherwise if the URL is less than 16 characters.
+    if (msg.ip.length < 10) { // If the ip is less than 10 characters, format the message this way.
       debugLogMsg = `${time}\t${msg.ip}\t\t${msg.method}\t${msg.url}\t\t${msg.level}\t${msg.logMsg}`;
-    } else {
+    } else { // Otherwise if the ip is longer than 10 characters, format the message this way.
       debugLogMsg = `${time}\t${msg.ip}\t${msg.method}\t${msg.url}\t\t${msg.level}\t${msg.logMsg}`;
     }
-  } else if (msg.ip.length < 10) {
+  } else if (msg.ip.length < 10) { // Otherwise if the IP is less than 10 characters, format the message this way.
     debugLogMsg = `${time}\t${msg.ip}\t\t${msg.method}\t${msg.url}\t${msg.level}\t${msg.logMsg}`;
-  } else {
+  } else { // Otherwise format the message this way.
     debugLogMsg = `${time}\t${msg.ip}\t${msg.method}\t${msg.url}\t${msg.level}\t${msg.logMsg}`;
   }
 
-  fs.stat(errorLog, (err) => {
-    if (err === null) {
+  fs.stat(errorLog, (err) => { // Check to see if there is an error when checking the status of the error log.
+    if (err === null) { // If there is no error, write the message to the log.
       fs.appendFile(errorLog, `${debugLogMsg}\n`, (writeErr) => {
         if (writeErr) throw writeErr;
       });
-    } else if (err.code === 'ENOENT') {
-      fs.appendFile(errorLog, `TIME\t\tIP\t\tMETHOD\tURL\t\tLEVEL\tMESSAGE\n${debugLogMsg}\n`, (writeErr) => {
+    } else if (err.code === 'ENOENT') { // Otherwise if the error is a non existent file, write the headers and the message to the log.
+      fs.appendFile(errorLog, `TIME\t\tIP\t\tMETHOD\tURL\t\tLEVEL\tMESSAGE\n${debugLogMsg}\n`, (writeErr) => { // Throw an error if there is a write error.
         if (writeErr) throw writeErr;
       });
     }
