@@ -75,7 +75,7 @@ exports.update = (data, error, success) => {
     .then((existingURL) => {
       // Log update URL attempt.
       log.debug({
-        logMsg: `Attempting to change the URL for ${data.id} to ${data.URL}in the database.`,
+        logMsg: `Attempting to change the URL for ${data.id} to ${data.URL} in the database.`,
         level: 'DEBUG',
       });
       existingURL.updateAttributes(data).then(success).catch(error);
