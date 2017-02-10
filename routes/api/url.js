@@ -126,44 +126,52 @@ module.exports = (express) => {    // Export the following function to be used b
     // Run url findURL passing it the url data, an error function, and a success function.
     url.findUrl(
       request.body,
-        (error) => {    // The error function accepts an error message.
-          res.status(500).json(error);     // It responds with a server error and the error message.
-        },
-        (u) => {    // The success function takes the data from a url.
-          // Log out request.
+      (error) => {    // The error function accepts an error message.
+        // Log out server error.
+        log.debug({
+          logMsg: error,
+          method: req.method,
+          url: (req.baseUrl + req.url),
+          ip: req.ip,
+          level: 'ERROR',
+        });
+        res.status(500).json(error);     // It responds with a server error and the error message.
+      },
+      (u) => {    // The success function takes the data from a url.
+        // Log out request.
+        log.debug({
+          logMsg: `Requested URL with the id of ${request.body.id}.`,
+          method: req.method,
+          url: (req.baseUrl + req.url),
+          ip: req.ip,
+          level: 'INFO',
+        });
+
+        if (u !== null) {    // If the url is not null.
+          res.status(200).json({              // Respond with the ok status and url.
+            status: {
+              code: 200,
+            },
+            urls: [u],
+          });
+        } else {  // Otherwise respond with no URLS of that id error message.
+          // Log out error.
           log.debug({
-            logMsg: `Requested URL with the id of ${request.body.id}.`,
+            logMsg: `There is no url with the id ${request.body.id}.`,
             method: req.method,
             url: (req.baseUrl + req.url),
             ip: req.ip,
-            level: 'INFO',
+            level: 'ERROR',
           });
 
-          if (u !== null) {    // If the url is not null.
-            res.status(200).json({              // Respond with the ok status and url.
-              status: {
-                code: 200,
-              },
-              urls: [u],
-            });
-          } else {  // Otherwise respond with no URLS of that id error message.
-            // Log out error.
-            log.debug({
-              logMsg: `There is no url with the id ${request.body.id}.`,
-              method: req.method,
-              url: (req.baseUrl + req.url),
-              ip: req.ip,
-              level: 'ERROR',
-            });
-
-            res.status(404).json({
-              status: {
-                code: 404,
-                error: `There is no url with the id ${req.body.id}.`,
-              },
-            });
-          }
-        });
+          res.status(404).json({
+            status: {
+              code: 404,
+              error: `There is no url with the id ${req.body.id}.`,
+            },
+          });
+        }
+      });
   });
 
   // POST URL UPDATE BY ID
@@ -198,33 +206,33 @@ module.exports = (express) => {    // Export the following function to be used b
     // Run url destroy passing it the url data, an error function, and a success function.
     url.destroy(
       req.body,
-        (error) => {    // The error function accepts an error message.
-          res.status(500).json(error);    // Respond with server error and error message.
-        },
-        (u) => {    // The success function takes the response from the deleted url.
-          if (u) {    // If the response from the deleted URL is true.
-            // Respond with the OK status, the id of the delete url and deleted true.
-            res.status(200).json({
-              status: {
-                code: 200,
+      (error) => {    // The error function accepts an error message.
+        res.status(500).json(error);    // Respond with server error and error message.
+      },
+      (u) => {    // The success function takes the response from the deleted url.
+        if (u) {    // If the response from the deleted URL is true.
+          // Respond with the OK status, the id of the delete url and deleted true.
+          res.status(200).json({
+            status: {
+              code: 200,
+            },
+            urls: [
+              {
+                id: req.body.id,
+                deleted: true,
               },
-              urls: [
-                {
-                  id: req.body.id,
-                  deleted: true,
-                },
-              ],
-            });
-          } else {    // If the response from the deleted URL wasn't true.
-            // Respond with the 404 not found status and missing url error message.
-            res.status(404).json({
-              status: {
-                code: 404,
-                error: `There is no url with the id ${req.body.id}.`,
-              },
-            });
-          }
-        });
+            ],
+          });
+        } else {    // If the response from the deleted URL wasn't true.
+          // Respond with the 404 not found status and missing url error message.
+          res.status(404).json({
+            status: {
+              code: 404,
+              error: `There is no url with the id ${req.body.id}.`,
+            },
+          });
+        }
+      });
   });
 
   return router;    // Return the router.
