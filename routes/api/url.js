@@ -102,7 +102,7 @@ module.exports = (express) => {    // Export the following function to be used b
         } else {    // Otherwise respond with no URLS error message.
           // Log out no URLs message.
           log.debug({
-            logMsg: 'There are no URLs in the database',
+            logMsg: 'There are no URLs in the database.',
             method: req.method,
             url: (req.baseUrl + req.url),
             ip: req.ip,
