@@ -223,11 +223,26 @@ module.exports = (express) => {    // Export the following function to be used b
     url.destroy(
       req.body,
       (error) => {    // The error function accepts an error message.
+        // Log out server error message.
+        log.debug({
+          logMsg: `There is no url with the id ${request.body.id}.`,
+          method: req.method,
+          url: (req.baseUrl + req.url),
+          ip: req.ip,
+          level: 'ERROR',
+        });
         res.status(500).json(error);    // Respond with server error and error message.
       },
       (u) => {    // The success function takes the response from the deleted url.
         if (u) {    // If the response from the deleted URL is true.
           // Respond with the OK status, the id of the delete url and deleted true.
+          log.debug({
+            logMsg: `Deleted URL with the id of ${request.body.id}.`,
+            method: req.method,
+            url: (req.baseUrl + req.url),
+            ip: req.ip,
+            level: 'INFO',
+          });
           res.status(200).json({
             status: {
               code: 200,
@@ -240,6 +255,13 @@ module.exports = (express) => {    // Export the following function to be used b
             ],
           });
         } else {    // If the response from the deleted URL wasn't true.
+          log.debug({
+            logMsg: `There is no url with the id ${request.body.id}.`,
+            method: req.method,
+            url: (req.baseUrl + req.url),
+            ip: req.ip,
+            level: 'ERROR',
+          });
           // Respond with the 404 not found status and missing url error message.
           res.status(404).json({
             status: {
