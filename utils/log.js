@@ -64,13 +64,13 @@ module.exports.debug = (info) => {
 
       switch (consoleMsg.level) {
         case 'INFO':
-          consoleMsg.level = chalk.green(consoleMsg.level);
+          consoleMsg.level = chalk.green(` ${consoleMsg.level} `);
           break;
         case 'DEBUG':
-          consoleMsg.level = chalk.yellow(consoleMsg.level);
+          consoleMsg.level = chalk.yellow(` ${consoleMsg.level} `);
           break;
         case 'ERROR':
-          consoleMsg.level = chalk.black.bgRed(consoleMsg.level);
+          consoleMsg.level = chalk.black.bgRed(` ${consoleMsg.level} `);
           consoleMsg.logMsg = chalk.red(consoleMsg.logMsg);
           break;
         default:
