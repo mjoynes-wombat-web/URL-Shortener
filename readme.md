@@ -1,4 +1,4 @@
-# URL Shortener - Version 1.3
+# URL Shortener - Version 1.4
 This URL shortener creates a unique shortened URL based on a randomly generated string from Math.random();
 <br>
 <br>
@@ -53,7 +53,7 @@ error | Outputs the error debug messages.
 #### [`http://localhost:3000/go/:shortenedURL`]
 
 ### Summary
-By `:shortenedURL` with one of the shortened URLs you will be redirected to the full URL that's stored in the database.
+By replacing `:shortenedURL` with one of the shortened URLs you will be redirected to the full URL that's stored in the database.
 <br>
 <br>
 <br>
@@ -196,3 +196,9 @@ By replacing `:id` in the DELETE URL you can delete the URL with that ID.
   ]
 }
 ```
+<br>
+<br>
+
+# Code Styling
+## AirBnb JavaScript
+This projected follows the AirBnb Javascript styling conventions. Their documentation can be found at [https://github.com/airbnb/javascript](https://github.com/airbnb/javascript "AirBnb JavaScript Style Guide").

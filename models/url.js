@@ -22,13 +22,13 @@ function add(data, error, success) {
         level: 'DEBUG',
       });
       success(existingURL);
-    // Otherwise continue checking the data.
-  } else {
-    // Log find duplicate short URL attempt.
-     log.debug({
-    logMsg: `Checking to see if the short URL, ${data.shortURL}, already exists in the database.`,
-    level: 'DEBUG',
-  });
+      // Otherwise continue checking the data.
+    } else {
+      // Log find duplicate short URL attempt.
+      log.debug({
+        logMsg: `Checking to see if the short URL, ${data.shortURL}, already exists in the database.`,
+        level: 'DEBUG',
+      });
       db.url.find({    // Find any URL that has a matching shortURL.
         where: {
           shortURL: data.shortURL,
@@ -43,16 +43,17 @@ function add(data, error, success) {
           });
           const correctedData = data;
           correctedData.shortURL = Math.random()
-                                                 .toString(36)
-                                                 .substr(2, Math.floor((Math.random() * (10 - 1)) + 1));
+            .toString(36)
+            .substr(2, Math.floor((Math.random() * (10 - 1)) + 1));
           add(correctedData, error, success);
-        // If there are no duplicate short URLs then add the URL to the database and run success or if failed error.
-      } else {
-        // Log write URL attempt.
-        log.debug({
-    logMsg: `Attempting to add URL, ${data.URL}, with the short URL of ${data.shortURL}, to the database.`,
-    level: 'DEBUG',
-  });
+          // If there are no duplicate short URLs then add the URL to the database and run success
+          // or if failed error.
+        } else {
+          // Log write URL attempt.
+          log.debug({
+            logMsg: `Attempting to add URL, ${data.URL}, with the short URL of ${data.shortURL}, to the database.`,
+            level: 'DEBUG',
+          });
           db.url.create(data).then(success).catch(error);
         }
       });
@@ -70,15 +71,15 @@ exports.update = (data, error, success) => {
       id: data.id,
     },
   })
-  // Then update the existing URL with the new data and run success or if failed error.
-  .then((existingURL) => {
-    // Log update URL attempt.
-    log.debug({
-    logMsg: `Attempting to change the URL for ${data.id} to ${data.URL}in the database.`,
-    level: 'DEBUG',
-  });
-    existingURL.updateAttributes(data).then(success).catch(error);
-  })
+    // Then update the existing URL with the new data and run success or if failed error.
+    .then((existingURL) => {
+      // Log update URL attempt.
+      log.debug({
+        logMsg: `Attempting to change the URL for ${data.id} to ${data.URL} in the database.`,
+        level: 'DEBUG',
+      });
+      existingURL.updateAttributes(data).then(success).catch(error);
+    })
   .catch(error); // If the find fails then run the error.
 };
 

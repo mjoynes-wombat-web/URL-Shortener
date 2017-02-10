@@ -5,7 +5,9 @@ class URL {    // Setup URL class.
   constructor(addr) {
     this.URL = addr;    // Original URL variable.
     // Creates shortened url from Math.random()
-    this.shortURL = Math.random().toString(36).substr(2, Math.floor((Math.random() * (10 - 1)) + 1));
+    this.shortURL = Math.random()
+      .toString(36)
+      .substr(2, Math.floor((Math.random() * (10 - 1)) + 1));
   }
 }
 
@@ -16,12 +18,12 @@ module.exports = (express) => {    // Export the following function to be used b
   router.post('/urls', (req, res) => {
     // Log out short URL creation attempt.
     log.debug({
-            logMsg: `Attempting to create a short URL for ${req.body.URL}.`,
-            method: req.method,
-            url: (req.baseUrl + req.url),
-            ip: req.ip,
-            level: 'INFO',
-          });
+      logMsg: `Attempting to create a short URL for ${req.body.URL}.`,
+      method: req.method,
+      url: (req.baseUrl + req.url),
+      ip: req.ip,
+      level: 'INFO',
+    });
     if (req.body.URL) {    // If a URL was sent in the request body.
       // Creates shortened URL with the information submitted and the URL class.
       const postURL = new URL(req.body.URL);
@@ -80,12 +82,12 @@ module.exports = (express) => {    // Export the following function to be used b
   router.get('/urls', (req, res) => {
     // Log out find URLs attempt.
     log.debug({
-            logMsg: 'Requesting all URLs.',
-            method: req.method,
-            url: (req.baseUrl + req.url),
-            ip: req.ip,
-            level: 'INFO',
-          });
+      logMsg: 'Requesting all URLs.',
+      method: req.method,
+      url: (req.baseUrl + req.url),
+      ip: req.ip,
+      level: 'INFO',
+    });
     url.findAllUrls(    // Run url findAllUrls passing it an error function and a success function.
       (error) => {    // The error function accepts an error message.
         res.status(500).json(error);     // It responds with a server error and the error message.
@@ -140,13 +142,13 @@ module.exports = (express) => {    // Export the following function to be used b
     const request = req;
     request.body.id = req.params.id;    // Grab the ID from the URL.
     // Log out find URL by id attempt.
-        log.debug({
-          logMsg: `Requested URL with the id of ${request.body.id}.`,
-          method: req.method,
-          url: (req.baseUrl + req.url),
-          ip: req.ip,
-          level: 'INFO',
-        });
+    log.debug({
+      logMsg: `Requested URL with the id of ${request.body.id}.`,
+      method: request.method,
+      url: (request.baseUrl + request.url),
+      ip: request.ip,
+      level: 'INFO',
+    });
 
     // Run url findURL passing it the url data, an error function, and a success function.
     url.findUrl(
@@ -155,9 +157,9 @@ module.exports = (express) => {    // Export the following function to be used b
         // Log out server error.
         log.debug({
           logMsg: error,
-          method: req.method,
-          url: (req.baseUrl + req.url),
-          ip: req.ip,
+          method: request.method,
+          url: (request.baseUrl + request.url),
+          ip: request.ip,
           level: 'ERROR',
         });
         res.status(500).json(error);     // It responds with a server error and the error message.
@@ -167,9 +169,9 @@ module.exports = (express) => {    // Export the following function to be used b
           // Log out found URL by ID.
           log.debug({
             logMsg: `Received URL info for ID ${request.body.id}.`,
-            method: req.method,
-            url: (req.baseUrl + req.url),
-            ip: req.ip,
+            method: request.method,
+            url: (request.baseUrl + request.url),
+            ip: request.ip,
             level: 'INFO',
           });
           res.status(200).json({              // Respond with the ok status and url.
@@ -182,16 +184,16 @@ module.exports = (express) => {    // Export the following function to be used b
           // Log out no URL with that ID.
           log.debug({
             logMsg: `There is no url with the id ${request.body.id}.`,
-            method: req.method,
-            url: (req.baseUrl + req.url),
-            ip: req.ip,
+            method: request.method,
+            url: (request.baseUrl + request.url),
+            ip: request.ip,
             level: 'ERROR',
           });
 
           res.status(404).json({
             status: {
               code: 404,
-              error: `There is no url with the id ${req.body.id}.`,
+              error: `There is no url with the id ${request.body.id}.`,
             },
           });
         }
@@ -204,48 +206,66 @@ module.exports = (express) => {    // Export the following function to be used b
     request.body.id = request.params.id;    // Grab the ID from the URL.
     // Log out attempted update by ID.
     log.debug({
-          logMsg: `Attempting to update URL with the id of ${request.body.id} to redirect to ${request.body.URL}.`,
-          method: req.method,
-          url: (req.baseUrl + req.url),
-          ip: req.ip,
-          level: 'INFO',
+      logMsg: `Attempting to update URL with the id of ${request.body.id} to redirect to ${request.body.URL}.`,
+      method: request.method,
+      url: (request.baseUrl + request.url),
+      ip: request.ip,
+      level: 'INFO',
+    });
+    if (request.body.URL) {
+      // Run url update passing it the url data, an error function, and a success function.
+      url.update(
+        request.body,
+        () => {    // The error function accepts an error message.
+          // Log out no url with id message.
+          log.debug({
+            logMsg: `There is no url with the id ${request.body.id}.`,
+            method: request.method,
+            url: (request.baseUrl + request.url),
+            ip: request.ip,
+            level: 'ERROR',
+          });
+          // Respond with not found error and no url with the ID error message.
+          res.status(404).json({
+            status: {
+              code: 404,
+              error: `There is no url with the id ${request.body.id}.`,
+            },
+          });
+        },
+        (u) => {    // The success function takes the updated data from a url.
+          // Log out update URL by ID message.
+          log.debug({
+            logMsg: `Updated URL with the id of ${request.body.id} to redirect to ${u.URL}.`,
+            method: request.method,
+            url: (request.baseUrl + request.url),
+            ip: request.ip,
+            level: 'INFO',
+          });
+          res.status(200).json({    // Respond with the ok status and update URL.
+            status: {
+              code: 200,
+            },
+            urls: [u],
+          });
         });
-    // Run url update passing it the url data, an error function, and a success function.
-    url.update(
-      request.body,
-      () => {    // The error function accepts an error message.
-        // Log out no url with id message.
-        log.debug({
-          logMsg: `There is no url with the id ${request.body.id}.`,
-          method: req.method,
-          url: (req.baseUrl + req.url),
-          ip: req.ip,
-          level: 'ERROR',
-        });
-        // Respond with not found error and no url with the ID error message.
-        res.status(404).json({
-          status: {
-            code: 404,
-            error: `There is no url with the id ${request.body.id}.`,
-          },
-        });
-      },
-      (u) => {    // The success function takes the updated data from a url.
-        // Log out update URL by ID message.
-        log.debug({
-          logMsg: `Updated URL with the id of ${request.body.id} to redirect to ${u.URL}.`,
-          method: req.method,
-          url: (req.baseUrl + req.url),
-          ip: req.ip,
-          level: 'INFO',
-        });
-        res.status(200).json({    // Respond with the ok status and update URL.
-          status: {
-            code: 200,
-          },
-          urls: [u],
-        });
+    } else {
+      // Respond with an unprocessable entity error and missing url error message.
+      // Log out missing URL message.
+      log.debug({
+        logMsg: 'No URL provided.',
+        method: req.method,
+        url: (req.baseUrl + req.url),
+        ip: req.ip,
+        level: 'ERROR',
       });
+      res.status(422).json({
+        status: {
+          code: 422,
+          error: 'You did not provide a url.',
+        },
+      });
+    }
   });
 
   router.delete('/urls/:id', (req, res) => {
@@ -253,22 +273,22 @@ module.exports = (express) => {    // Export the following function to be used b
     request.body.id = request.params.id;    // Grab the ID form the URL.
     // Log delete URL by ID attempt.
     log.debug({
-            logMsg: `Attempting to delete URL with the id of ${request.body.id}.`,
-            method: req.method,
-            url: (req.baseUrl + req.url),
-            ip: req.ip,
-            level: 'INFO',
-          });
+      logMsg: `Attempting to delete URL with the id of ${request.body.id}.`,
+      method: request.method,
+      url: (request.baseUrl + request.url),
+      ip: request.ip,
+      level: 'INFO',
+    });
     // Run url destroy passing it the url data, an error function, and a success function.
     url.destroy(
-      req.body,
+      request.body,
       (error) => {    // The error function accepts an error message.
         // Log out server error message.
         log.debug({
           logMsg: `There is no url with the id ${request.body.id}.`,
-          method: req.method,
-          url: (req.baseUrl + req.url),
-          ip: req.ip,
+          method: request.method,
+          url: (request.baseUrl + request.url),
+          ip: request.ip,
           level: 'ERROR',
         });
         res.status(500).json(error);    // Respond with server error and error message.
@@ -278,9 +298,9 @@ module.exports = (express) => {    // Export the following function to be used b
           // Log delete URL by ID success.
           log.debug({
             logMsg: `Deleted URL with the id of ${request.body.id}.`,
-            method: req.method,
-            url: (req.baseUrl + req.url),
-            ip: req.ip,
+            method: request.method,
+            url: (request.baseUrl + request.url),
+            ip: request.ip,
             level: 'INFO',
           });
           // Respond with the OK status, the id of the delete url and deleted true.
@@ -290,25 +310,25 @@ module.exports = (express) => {    // Export the following function to be used b
             },
             urls: [
               {
-                id: req.body.id,
+                id: request.body.id,
                 deleted: true,
               },
             ],
           });
         } else {    // If the response from the deleted URL wasn't true.
-        //Log out no URL with that ID.
+          // Log out no URL with that ID.
           log.debug({
             logMsg: `There is no url with the id ${request.body.id}.`,
-            method: req.method,
-            url: (req.baseUrl + req.url),
-            ip: req.ip,
+            method: request.method,
+            url: (request.baseUrl + request.url),
+            ip: request.ip,
             level: 'ERROR',
           });
           // Respond with the 404 not found status and missing url error message.
           res.status(404).json({
             status: {
               code: 404,
-              error: `There is no url with the id ${req.body.id}.`,
+              error: `There is no url with the id ${request.body.id}.`,
             },
           });
         }

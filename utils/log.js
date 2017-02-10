@@ -46,13 +46,14 @@ module.exports.debug = (info) => { // Export to Express.
     } else { // Otherwise if the ip is longer than 10 characters, format the message this way.
       debugLogMsg = `${time}\t${msg.ip}\t${msg.method}\t${msg.url}\t\t${msg.level}\t${msg.logMsg}`;
     }
-  } else if (msg.ip.length < 10) { // Otherwise if the IP is less than 10 characters, format the message this way.
+    // Otherwise if the IP is less than 10 characters, format the message this way.
+  } else if (msg.ip.length < 10) {
     debugLogMsg = `${time}\t${msg.ip}\t\t${msg.method}\t${msg.url}\t${msg.level}\t${msg.logMsg}`;
   } else { // Otherwise format the message this way.
     debugLogMsg = `${time}\t${msg.ip}\t${msg.method}\t${msg.url}\t${msg.level}\t${msg.logMsg}`;
   }
-
-  fs.stat(errorLog, (err) => { // Check to see if there is an error when checking the status of the error log.
+  // Check to see if there is an error when checking the status of the error log.
+  fs.stat(errorLog, (err) => {
     if (err === null) { // If there is no error, write the message to the log.
       fs.appendFile(errorLog, `${debugLogMsg}\n`, (writeErr) => {
         if (writeErr) throw writeErr;
