@@ -9,3 +9,4 @@ out
 build
 .vscode
 .eslintrc.json
+coverage
