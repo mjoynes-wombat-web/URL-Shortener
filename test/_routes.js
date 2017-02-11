@@ -1,16 +1,15 @@
 const expect = require('chai').expect;
 const request = require('supertest');
-
-const routes = [
-  '/go/:shortUrl',
-  '/api/v1/urls',
-  '/api/v1/urls/:id',
-];
-
-console.log(routes);
+const rewire = require('rewire');
 
 describe('API Route Access', () => {
   let server;
+
+  const routes = [
+    '/go/:shortUrl',
+    '/api/v1/urls',
+    '/api/v1/urls/:id',
+  ];
 
   beforeEach(() => {
     server = require('../server.js');
