@@ -150,10 +150,11 @@ describe('API Route Access', () => {
                   const response = JSON.parse(res.text);
 
                   if (route.code === 200) {
-                    Object.keys(response.urls[0]).forEach((key) => {
-                      expect(response.urls[0][key]).to.equal(route.resData.urls[0][key]);
+                    Object.keys(response.urls[0]).forEach((k) => {
+                      expect(response.urls[0][k]).to.equal(route.resData.urls[0][k]);
                     });
                   }
+
                   done();
                 });
             });
@@ -171,12 +172,9 @@ describe('API Route Access', () => {
                 .end((err, res) => {
                   const response = JSON.parse(res.text);
 
-                  expect(response.url[0].id).to.equal(route.reqData.URL);
-                  expect(response.urls[0].id).to.equal(route.resData.urls[0].id);
-                  expect(response.urls[0].URL).to.equal(route.resData.urls[0].URL);
-                  expect(response.urls[0].shortUrl).to.equal(route.resData.urls[0].shortUrl);
-                  expect(response.urls[0].createdAt).to.equal(route.resData.urls[0].createdAt);
-                  expect(response.urls[0].updatedAt).to.equal(route.resData.urls[0].updatedAt);
+                  Object.keys(response.urls[0]).forEach((k) => {
+                    expect(response.urls[0][k]).to.equal(route.resData.urls[0][k]);
+                  });
 
                   done();
                 });
@@ -194,6 +192,11 @@ describe('API Route Access', () => {
                 .expect(route.code)
                 .end((err, res) => {
                   const response = JSON.parse(res.text);
+
+                  Object.keys(response.urls[0]).forEach((k) => {
+                    expect(response.urls[0][k]).to.equal(route.resData.urls[0][k]);
+                  });
+
                   done();
                 });
             });
