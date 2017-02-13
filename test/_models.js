@@ -60,7 +60,7 @@ describe('URL Model Queries', () => {
     urlModel.__set__('db.url',
       {
         find: (data) => {
-          const resData = [];
+          let resData = [];
           urls.forEach((u) => {
             let match;
             Object.keys(data.where).forEach((w) => {
@@ -75,12 +75,29 @@ describe('URL Model Queries', () => {
               resData.push(u);
             }
           });
-          return resData;
+          return new Promise((resolve, reject) => {
+            if (data === undefined) {
+              reject('There was no data passed.');
+            }
+
+            if (resData.length === 0) {
+              resData = null;
+            }
+
+            resolve(resData);
+          });
         },
         create: (data) => {
-          urls.push(data);
+          return new Promise((resolve, reject) => {
+            if (data === undefined) {
+              reject('There was no data passed.');
+            }
 
-          return data;
+            const newUrl = new URL(data.URL);
+            urls.push(newUrl);
+
+            resolve(newUrl);
+          });
         },
         findAll: () => ({ urls }),
         destroy: (data) => {
@@ -101,27 +118,26 @@ describe('URL Model Queries', () => {
             }
           });
 
-
           return resData.id;
         },
       });
   });
 
   describe('Testing Adding URL', () => {
-    it('Testing', (done) => {
-      urlModel.add(
-        { URL: 'http://www.asdfawegaasdg.com' },
-        (error) => {
-          console.log('this ran.');
-          it('There was an error adding the URL.', (done) => {
-            done();
-          });
+    it('The URL was added successfully.', (done) => {
+      const _this = this;
+      const results = urlModel.add(
+        { URL: 'http://www.asdfawegaaaassdg.com' },
+        (err) => {
+          return err;
         },
         (u) => {
-          it('The URL was added successfully.', (done) => {
-            done();
-          });
+          console.log(u);
+           _this.expect(1).to.equal(2);
+          return u;
         });
+
+      console.log(results);
       done();
     });
   });
