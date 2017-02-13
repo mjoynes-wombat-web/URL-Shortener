@@ -1,4 +1,4 @@
-const url = require('../../models/url.js');    // Grab URLs model.
+const urlModel = require('../../models/url.js');    // Grab URLs model.
 const log = require('../../utils/log'); // Retrieve the logger.
 
 class URL {    // Setup URL class.
@@ -28,7 +28,7 @@ module.exports = (express) => {    // Export the following function to be used b
       // Creates shortened URL with the information submitted and the URL class.
       const postURL = new URL(req.body.URL);
 
-      url.add(    // Run url add passing it the url data, an error function and a success function.
+      urlModel.add(    // Run url add passing it the url data, an error function and a success function.
         postURL,
         (error) => {    // The error function takes an error message.
           // Log out server error.
@@ -88,7 +88,7 @@ module.exports = (express) => {    // Export the following function to be used b
       ip: req.ip,
       level: 'INFO',
     });
-    url.findAllUrls(    // Run url findAllUrls passing it an error function and a success function.
+    urlModel.findAllUrls(    // Run url findAllUrls passing it an error function and a success function.
       (error) => {    // The error function accepts an error message.
         res.status(500).json(error);     // It responds with a server error and the error message.
         // Log out server error.
@@ -151,7 +151,7 @@ module.exports = (express) => {    // Export the following function to be used b
     });
 
     // Run url findURL passing it the url data, an error function, and a success function.
-    url.findUrl(
+    urlModel.findUrl(
       request.body,
       (error) => {    // The error function accepts an error message.
         // Log out server error.
@@ -214,7 +214,7 @@ module.exports = (express) => {    // Export the following function to be used b
     });
     if (request.body.URL) {
       // Run url update passing it the url data, an error function, and a success function.
-      url.update(
+      urlModel.update(
         request.body,
         () => {    // The error function accepts an error message.
           // Log out no url with id message.
@@ -280,7 +280,7 @@ module.exports = (express) => {    // Export the following function to be used b
       level: 'INFO',
     });
     // Run url destroy passing it the url data, an error function, and a success function.
-    url.destroy(
+    urlModel.destroy(
       request.body,
       (error) => {    // The error function accepts an error message.
         // Log out server error message.

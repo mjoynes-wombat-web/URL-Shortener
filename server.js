@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({
 app.use('/', require('./routes')(express));
 
 // Setup server to run on the configured port and console out success.
-exports.server = app.listen(port, () => {
+module.exports = app.listen(port, () => {
   log.debug({
     logMsg: `Sever active on ${port}.`,
     level: 'INFO',

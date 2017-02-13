@@ -9,3 +9,5 @@ out
 build
 .vscode
 .eslintrc.json
+coverage
+test/_routes_direct.js
