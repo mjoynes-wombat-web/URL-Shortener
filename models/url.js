@@ -1,6 +1,8 @@
 const db = require('./db');    // Require the db code.
 const log = require('../utils/log'); // Retrieve the logger.
 
+// module.exports.db = db;
+
 // Create URL function.
 // The add URL function takes the data to be entered, the error function and the success function.
 function add(data, error, success) {
