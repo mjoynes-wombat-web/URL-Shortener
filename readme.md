@@ -1,4 +1,4 @@
-# URL Shortener - Version 1.4
+# URL Shortener - Version 1.5
 This URL shortener creates a unique shortened URL based on a randomly generated string from Math.random();
 <br>
 <br>
@@ -47,6 +47,15 @@ info | Outputs the info, and error debug messages.
 error | Outputs the error debug messages.
 <br>
 <br>
+
+##Unit Testing
+To unit test the various portions of the applications your can run the following functions while in the root directory. Due to rewire overlap all tests cannot be run at once.
+
+Command | Modules Tested
+----------------|-------------------------
+`mocha test/_log.js` | Tests the debug logging functionality.
+`mocha test/_models.js` | Tests the models functionality.
+`mocha test/_routes.js` | Tests the routes functionality.
 
 # GO Route
 ## Accessing a shortened URL.
