@@ -80,6 +80,7 @@ exports.update = (data, error, success) => {
         logMsg: `Attempting to change the URL for ${data.id} to ${data.URL} in the database.`,
         level: 'DEBUG',
       });
+
       existingURL.updateAttributes(data).then(success).catch(error);
     })
   .catch(error); // If the find fails then run the error.
@@ -93,6 +94,7 @@ exports.findAllUrls = (error, success) => {
     logMsg: 'Attempting to gather the URLs from the database.',
     level: 'DEBUG',
   });
+
   db.url.findAll()    // Find All URLs.
   .then(success)    // If successful run success.
   .catch(error);    // If failed run error.
@@ -123,6 +125,7 @@ exports.destroy = (data, error, success) => {
     logMsg: `Attempting to delete the URL for ID ${data.id} from the database.`,
     level: 'DEBUG',
   });
+
   db.url.destroy({    // Delete a URL based on the ID from data.
     where: {
       id: data.id,

@@ -1,11 +1,10 @@
 const expect = require('chai').expect;
 const rewire = require('rewire');
-let urlModel = rewire('../models/url.js');
 
-
+const urlModel = rewire('../models/url.js');
 
 describe('URL Model Queries', () => {
-  let urls = [
+  const urls = [
     {
       id: 11,
       URL: 'https://docs.google.com/',
@@ -75,7 +74,7 @@ describe('URL Model Queries', () => {
               resData.push(u);
             }
           });
-          return new Promise((resolve, reject) => {
+          return new Promise((reject, resolve) => {
             if (data === undefined) {
               reject('There was no data passed.');
             }
@@ -83,23 +82,22 @@ describe('URL Model Queries', () => {
             if (resData.length === 0) {
               resData = null;
             }
-
             resolve(resData);
           });
         },
-        create: (data) => {
-          return new Promise((resolve, reject) => {
-            if (data === undefined) {
-              reject('There was no data passed.');
-            }
+        create: data => new Promise((reject, resolve) => {
+          if (data === undefined) {
+            reject('There was no data passed.');
+          }
 
-            const newUrl = new URL(data.URL);
-            urls.push(newUrl);
-
-            resolve(newUrl);
-          });
-        },
-        findAll: () => ({ urls }),
+          const newUrl = new URL(data.URL);
+          urls.push(newUrl);
+          resolve(newUrl);
+        }),
+        findAll: () => new Promise((reject, resolve) => {
+          if (urls.length === 0) { reject('No Urls.'); }
+          resolve(urls);
+        }),
         destroy: (data) => {
           const resData = [];
           urls.forEach((u, index) => {
@@ -118,33 +116,78 @@ describe('URL Model Queries', () => {
             }
           });
 
-          return resData.id;
+          return new Promise((reject, resolve) => {
+            if (resData.length === 0) {
+              reject('No url found.');
+            }
+
+            resolve(resData.id);
+          });
         },
       });
   });
 
   describe('Testing Adding URL', () => {
     it('The URL was added successfully.', (done) => {
-      const _this = this;
-      const results = urlModel.add(
+      urlModel.add(
         { URL: 'http://www.asdfawegaaaassdg.com' },
-        (err) => {
-          return err;
-        },
-        (u) => {
-          console.log(u);
-           _this.expect(1).to.equal(2);
-          return u;
-        });
+        err => err,
+        u => u);
+      done();
+    });
+  });
 
-      console.log(results);
+  describe('Testing Updating URL', () => {
+    it('The URL was update successfully.', (done) => {
+      urlModel.update(
+        {
+          id: 11,
+          URL: 'http://www.asdfawegaaaassdg.com',
+        },
+        err => err,
+        u => u);
+      done();
+    });
+  });
+  describe('Testing Find All URL', () => {
+    it('The URL was found successfully.', (done) => {
+      urlModel.findAllUrls(
+        err => err,
+        u => u);
+      done();
+    });
+  });
+  describe('Testing Find URL 11', () => {
+    it('The URL was found successfully.', (done) => {
+      urlModel.findUrl(
+        {
+          id: 11,
+        },
+        err => err,
+        u => u);
+      done();
+    });
+  });
+  describe('Testing Destroy URL 11', () => {
+    it('The URL was found successfully.', (done) => {
+      urlModel.destroy(
+        {
+          id: 11,
+        },
+        err => err,
+        u => u);
+      done();
+    });
+  });
+  describe('Testing Find Full URL for URL 11.', () => {
+    it('The Full URL was found successfully.', (done) => {
+      urlModel.findFullUrl(
+        {
+          id: 11,
+        },
+        err => err,
+        u => u);
       done();
     });
   });
 });
-
-
-
-
-
-
