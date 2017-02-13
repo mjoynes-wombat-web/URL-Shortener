@@ -1,13 +1,15 @@
+// Pulling Requirements.
 const expect = require('chai').expect;
 const request = require('supertest');
-const rewire = require('rewire');
 const nock = require('nock');
 const log = require('../utils/log');
 
+// Testing API Route Access.
 describe('API Route Access', () => {
+  // Setting server and time variables.
   let server;
   const time = new Date().toISOString();
-
+  // Route Objects.
   const routes = {
     get: [
       {
@@ -117,10 +119,12 @@ describe('API Route Access', () => {
     ],
   };
 
+  // Before each tet run these.
   beforeEach(() => {
+    // Setup server
     server = require('../server.js');
-    shortUrl = 'abcd';
 
+    // Loop through routes object and create nock servers.
     Object.keys(routes).forEach((key) => {
       routes[key].forEach((route) => {
         if (key === 'get') {
@@ -133,24 +137,30 @@ describe('API Route Access', () => {
       });
     });
   });
-
+  // After each test, close the server.
   afterEach(() => {
     server.close();
   });
-
+  // Loop through the routes object.
   Object.keys(routes).forEach((key) => {
     switch (key) {
+      // If the route is a get route.
       case 'get':
         describe('Testing GET Routes', () => {
+          // Log out testing GET message.
           log.debug({
             logMsg: 'Testing GET Routes.',
             level: 'DEBUG',
           });
+          // For each of the get routes.
           routes[key].forEach((route) => {
+            // Log out testing this GET route message.
             log.debug({
               logMsg: `Testing GET Route ${route.url}.`,
               level: 'DEBUG',
             });
+            // Test the route against the nock servers and make sure the code response item matches
+            // the routes object.
             it(`Response from ${route.url}`, (done) => {
               request('localhost:3000')
                 .get(route.url)
@@ -170,17 +180,23 @@ describe('API Route Access', () => {
           });
         });
         break;
+      // If the route is a post route.
       case 'post':
         describe('Testing POST Routes', () => {
+          // Log out testing POST message.
           log.debug({
             logMsg: 'Testing POST Routes.',
             level: 'DEBUG',
           });
+          // For each of the post routes.
           routes[key].forEach((route) => {
+            // Log out testing this POST route message.
             log.debug({
               logMsg: `Testing POST Route ${route.url}.`,
               level: 'DEBUG',
             });
+            // Test the route against the nock servers and make sure the code response item matches
+            // the routes object.
             it(`Response from ${route.url}`, (done) => {
               request('localhost:3000')
                 .post(route.url)
@@ -200,16 +216,22 @@ describe('API Route Access', () => {
         });
         break;
       case 'delete':
+        // If the route is a delete route.
         describe('Testing DELETE Routes', () => {
+          // Log out testing DELETE message.
           log.debug({
             logMsg: 'Testing DELETE Routes.',
             level: 'DEBUG',
           });
+          // For each of the delete routes.
           routes[key].forEach((route) => {
+            // Log out testing this DELETE route message.
             log.debug({
               logMsg: `Testing POST Route ${route.url}.`,
               level: 'DEBUG',
             });
+            // Test the route against the nock servers and make sure the code response item matches
+            // the routes object.
             it(`Response from ${route.url}`, (done) => {
               request('localhost:3000')
                 .delete(route.url)
