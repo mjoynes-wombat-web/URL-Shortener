@@ -2,6 +2,7 @@ const expect = require('chai').expect;
 const request = require('supertest');
 const rewire = require('rewire');
 const nock = require('nock');
+const log = require('../utils/log');
 
 describe('API Route Access', () => {
   let server;
@@ -141,7 +142,15 @@ describe('API Route Access', () => {
     switch (key) {
       case 'get':
         describe('Testing GET Routes', () => {
+          log.debug({
+            logMsg: 'Testing GET Routes.',
+            level: 'DEBUG',
+          });
           routes[key].forEach((route) => {
+            log.debug({
+              logMsg: `Testing GET Route ${route.url}.`,
+              level: 'DEBUG',
+            });
             it(`Response from ${route.url}`, (done) => {
               request('localhost:3000')
                 .get(route.url)
@@ -163,7 +172,15 @@ describe('API Route Access', () => {
         break;
       case 'post':
         describe('Testing POST Routes', () => {
+          log.debug({
+            logMsg: 'Testing POST Routes.',
+            level: 'DEBUG',
+          });
           routes[key].forEach((route) => {
+            log.debug({
+              logMsg: `Testing POST Route ${route.url}.`,
+              level: 'DEBUG',
+            });
             it(`Response from ${route.url}`, (done) => {
               request('localhost:3000')
                 .post(route.url)
@@ -184,7 +201,15 @@ describe('API Route Access', () => {
         break;
       case 'delete':
         describe('Testing DELETE Routes', () => {
+          log.debug({
+            logMsg: 'Testing DELETE Routes.',
+            level: 'DEBUG',
+          });
           routes[key].forEach((route) => {
+            log.debug({
+              logMsg: `Testing POST Route ${route.url}.`,
+              level: 'DEBUG',
+            });
             it(`Response from ${route.url}`, (done) => {
               request('localhost:3000')
                 .delete(route.url)
