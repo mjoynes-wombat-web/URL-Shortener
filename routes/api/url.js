@@ -1,5 +1,5 @@
 const urlModel = require('../../models/url.js');    // Grab URLs model.
-const log = require('../../utils/log'); // Retrieve the logger.
+const log = require('debug-tool-express'); // Retrieve the logger.
 
 class URL {    // Setup URL class.
   constructor(addr) {

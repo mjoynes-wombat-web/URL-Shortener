@@ -1,5 +1,5 @@
 const db = require('./db');    // Require the db code.
-const log = require('../utils/log'); // Retrieve the logger.
+const log = require('debug-tool-express'); // Retrieve the logger.
 
 // module.exports.db = db;
 
