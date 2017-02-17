@@ -1,4 +1,4 @@
-# URL Shortener - Version 1.5
+# URL Shortener - Version 1.5.1
 This URL shortener creates a unique shortened URL based on a randomly generated string from Math.random();
 <br>
 <br>
@@ -34,26 +34,11 @@ DB_PORT=*Your Database Port*
 ## Starting Application
 To start the application normally run `node server.js`.
 
-## Debugging
-The debugging logger messages for this application have 3 levels. They are error, info, and debug. Messages are output to `./log/error.log`.
-
-To start the application with console debugging run `DEBUG=opt server.js` where you replace `opt` with one of the options below. This will output specific messages to the console.
-
-Debug Option | Debug Message Outputs
----------------------|------------------------------------
-true | Outputs all debug messages.
-debug | Outputs all debug messages.
-info | Outputs the info, and error debug messages.
-error | Outputs the error debug messages.
-<br>
-<br>
-
 ##Unit Testing
 To unit test the various portions of the applications your can run the following functions while in the root directory. Due to rewire overlap all tests cannot be run at once.
 
 Command | Modules Tested
 ----------------|-------------------------
-`mocha test/_log.js` | Tests the debug logging functionality.
 `mocha test/_models.js` | Tests the models functionality.
 `mocha test/_routes.js` | Tests the routes functionality.
 
