@@ -11,3 +11,4 @@ build
 .eslintrc.json
 coverage
 test/_routes_direct.js
+server.env
