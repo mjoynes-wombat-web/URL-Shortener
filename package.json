@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "debug-tool-express": "^1.0.1",
+    "debug-tool-express": "^1.0.4",
     "eslint": "^3.15.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
