@@ -2,7 +2,7 @@
 const expect = require('chai').expect;
 const request = require('supertest');
 const nock = require('nock');
-const log = require('../utils/log');
+const log = require('debug-tool-express');
 
 // Testing API Route Access.
 describe('API Route Access', () => {

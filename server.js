@@ -1,7 +1,7 @@
 // INIT
 const express = require('express'); // Retrieve Express.
 const bodyParser = require('body-parser'); // Retrieve Body-Parser.
-const log = require('./utils/log'); // Retrieve the logger.
+const log = require('debug-tool-express'); // Retrieve the logger.
 
 const app = express(); // Setup application from Express.
 

@@ -1,5 +1,5 @@
 const url = require('../../models/url.js'); // Require the URL model.
-const log = require('../../utils/log'); // Retrieve the logger.
+const log = require('debug-tool-express'); // Retrieve the logger.
 
 // Export the following function to be used by other modules.
 module.exports = (express) => {

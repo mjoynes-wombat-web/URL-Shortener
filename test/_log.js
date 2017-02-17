@@ -2,7 +2,7 @@ const rewire = require('rewire');
 const expect = require('chai').expect;
 const sinon = require('sinon');
 
-const log = rewire('../utils/log');
+const log = rewire('debug-tool-express');
 
 describe('Debug Logging Utility', () => {
   describe('Testing Each Log Level', () => {

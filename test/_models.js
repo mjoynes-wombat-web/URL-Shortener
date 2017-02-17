@@ -1,7 +1,7 @@
 // Pull in requirements.
 const expect = require('chai').expect;
 const rewire = require('rewire');
-const log = require('../utils/log');
+const log = require('debug-tool-express');
 
 // Pull in the urlModel and use rewire on it to modify it later.
 const urlModel = rewire('../models/url.js');
