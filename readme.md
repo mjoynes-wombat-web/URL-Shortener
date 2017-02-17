@@ -196,3 +196,59 @@ By replacing `:id` in the DELETE URL you can delete the URL with that ID.
 # Code Styling
 ## AirBnb JavaScript
 This projected follows the AirBnb Javascript styling conventions. Their documentation can be found at [https://github.com/airbnb/javascript](https://github.com/airbnb/javascript "AirBnb JavaScript Style Guide").
+
+# Deployment
+## Server Setup
+The server is setup with nginx, mysql, node.js and pm2.
+
+### Nginx
+Nginx is setup to reverse proxy to localhost:3000 and uses SSL certification.
+
+### MySQL
+MySQL contains a apiCRUD table to hold the API created URLs.
+
+## Initial Sever Setup
+First you will need to create a directory to hold the code.
+Then run the following commands to setup the application.
+`git init` - Setup the local git repo.
+`git remote add origin https://github.com/ssmith-wombatweb/URL-Shortener -m master` - Sets the origin to the master repo.
+`git pull origin master` - Pulls the master repo to the server.
+`git branch --set-upstream-to=origin/master master` - Sets the upstream to the master so `git pull` can be run in the future.
+`npm install` - Installs the project dependencies.
+
+### Auto-deployment GIt Hook
+You will need to create a Git Hook to install new dependencies and restart pm2.
+`nano .git/hooks/post-merge` - Open and create the post-merge git hook.
+Insert the following into the hook.
+```
+#!/bin/sh
+
+modified_files="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
+
+check_run() {
+        echo "$modified_files" | grep --quiet "$1" && eval "$2"
+}
+
+check_run package.json "npm install"
+
+pm2 restart url-shortener
+```
+
+### .ENV Environment Variables.
+This application uses Sequelize for database access and dotenv for the database environment variables. The template.env file is a template for your environment variables. Enter your database access information into that file and save it as .env.
+
+### .ENV File Example
+```
+DB_NAME=*Your Database Name*
+DB_USER=*Your User Name*
+DB_PASS=*Your Password*
+DB_HOST=*Your Database Host Address*
+DB_SCHEMA=*Your Database Schema Type i.e. mysql*
+DB_PORT=*Your Database Port*
+```
+
+### Starting The Application
+Enter `pm2 start <app-root> --name <app-name>` to start the application.
+
+## Updating the project.
+Simply run `git pull` in the project root to update it. It will install any new dependencies and restart the application.
