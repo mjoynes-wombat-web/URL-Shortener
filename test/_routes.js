@@ -122,7 +122,7 @@ describe('API Route Access', () => {
   // Before each tet run these.
   beforeEach(() => {
     // Setup server
-    server = require('../server.js');
+    // server = require('../server.js');
 
     // Loop through routes object and create nock servers.
     Object.keys(routes).forEach((key) => {
@@ -138,9 +138,9 @@ describe('API Route Access', () => {
     });
   });
   // After each test, close the server.
-  afterEach(() => {
-    server.close();
-  });
+  // afterEach(() => {
+  //   server.close();
+  // });
   // Loop through the routes object.
   Object.keys(routes).forEach((key) => {
     switch (key) {
