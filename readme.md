@@ -45,16 +45,6 @@ Command | Modules Tested
 <br>
 <br>
 # API Access
-# GO Route
-## Accessing a shortened URL.
-#### [`http://localhost:3000/go/:shortenedURL`]
-
-### Summary
-By replacing `:shortenedURL` with one of the shortened URLs you will be redirected to the full URL that's stored in the database.
-<br>
-<br>
-<br>
-# API Access
 
 ## Creating a short URL.
 #### [`POST http://localhost:3000/api/v1/urls`]
@@ -195,7 +185,15 @@ By replacing `:id` in the DELETE URL you can delete the URL with that ID.
 ```
 <br>
 <br>
+# GO Route Access
+## Accessing a shortened URL.
+#### [`http://localhost:3000/go/:shortenedURL`]
 
+### Summary
+By replacing `:shortenedURL` with one of the shortened URLs you will be redirected to the full URL that's stored in the database.
+<br>
+<br>
+<br>
 # Code Styling
 ## AirBnb JavaScript
 This projected follows the AirBnb Javascript styling conventions. Their documentation can be found at [https://github.com/airbnb/javascript](https://github.com/airbnb/javascript "AirBnb JavaScript Style Guide").
