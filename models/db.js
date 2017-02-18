@@ -19,7 +19,7 @@ const sequelize = new Sequelize(
     // Set logging to false to prevent database overload.
     logging: false,
     dialectOptions: {
-      ssl: process.env.DB_SSL,
+      ssl: !!parseInt(process.env.DB_SSL, 10),
     },
   });
 
