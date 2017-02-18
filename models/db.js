@@ -4,21 +4,24 @@ require('dotenv').config();    // Require dotenv and configure it from the .env 
 
 // Create a connection to the database.
 const sequelize = new Sequelize(
-                                  process.env.DB_NAME,
-                                  process.env.DB_USER,
-                                  process.env.DB_PASS, {
-                                    host: process.env.DB_HOST,    // Set the host.
-                                    dialect: process.env.DB_SCHEMA,    // Set the dialect.
-                                    port: process.env.DB_PORT,    // Set the port.
-                                     // Set the max and min connections and maximum idle time.
-                                    pool: {
-                                      max: 5,
-                                      min: 0,
-                                      idle: 10000,
-                                    },
-                                    // Set logging to false to prevent database overload.
-                                    logging: false,
-                                  });
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASS, {
+    host: process.env.DB_HOST,    // Set the host.
+    dialect: process.env.DB_SCHEMA,    // Set the dialect.
+    port: process.env.DB_PORT,    // Set the port.
+    // Set the max and min connections and maximum idle time.
+    pool: {
+      max: 5,
+      min: 0,
+      idle: 10000,
+    },
+    // Set logging to false to prevent database overload.
+    logging: false,
+    dialectOptions: {
+      ssl: process.env.DB_SSL,
+    },
+  });
 
 const url = sequelize.define('urls', {    // Set up the urls table.
   URL: {    // Create a URL column that's a string.
