@@ -6,7 +6,7 @@ const log = require('debug-tool-express'); // Retrieve the logger.
 const app = express(); // Setup application from Express.
 
 // CONFIG
-const port = 3000; // Port for server;
+const port = 3001; // Port for server;
 
 // Setting up body-parser for json creation.
 app.use(bodyParser.json());
