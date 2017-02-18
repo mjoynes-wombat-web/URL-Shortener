@@ -12,3 +12,4 @@ build
 coverage
 test/_routes_direct.js
 server.env
+npm-debug.log
