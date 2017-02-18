@@ -209,7 +209,7 @@ When adding features to the URL Shorter the feature branch workflow should be us
 * Work on your code and push to the feature branch.
 * `git checkout master` - When done switch to the master branch.
 * `git pull` - Pull any updates from the master
-* `git checkout <feature-name` - Switch back to the featuer branch.
+* `git checkout <feature-name` - Switch back to the feature branch.
 * `git merge master` - Merge any changes from the master.
 * Commit and push any changes if necessary.
 * Create a pull request for your feature into the master branch.
