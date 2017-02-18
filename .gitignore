@@ -4,6 +4,7 @@ Icon*
 *.log
 *.logs
 .env
+.env.bak
 .env.json
 out
 build
@@ -12,3 +13,5 @@ build
 coverage
 test/_routes_direct.js
 server.env
+npm-debug.log
+.env*
