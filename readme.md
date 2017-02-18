@@ -31,7 +31,6 @@ DB_PORT=*Your Database Port*
 ```
 <br>
 <br>
-
 # Usage
 ## Starting Application
 To start the application normally run `node server.js`.
@@ -43,7 +42,8 @@ Command | Modules Tested
 ----------------|-------------------------
 `mocha test/_models.js` | Tests the models functionality.
 `mocha test/_routes.js` | Tests the routes functionality.
-
+<br>
+<br>
 # API Access
 # GO Route
 ## Accessing a shortened URL.
