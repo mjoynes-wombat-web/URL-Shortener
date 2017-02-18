@@ -14,7 +14,7 @@ const sequelize = new Sequelize(
     pool: {
       max: 5,
       min: 0,
-      idle: 200,
+      idle: 10000,
     },
     // Set logging to false to prevent database overload.
     logging: false,
