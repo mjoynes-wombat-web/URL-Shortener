@@ -197,7 +197,8 @@ By replacing `:shortenedURL` with one of the shortened URLs you will be redirect
 # Code Styling
 ## AirBnb JavaScript
 This projected follows the AirBnb Javascript styling conventions. Their documentation can be found at [https://github.com/airbnb/javascript](https://github.com/airbnb/javascript "AirBnb JavaScript Style Guide").
-
+<br>
+<br>
 # Workflow
 ## Using Feature Branches
 When adding features to the URL Shorter the feature branch workflow should be used. This means the following steps should be taken.
@@ -212,7 +213,8 @@ When adding features to the URL Shorter the feature branch workflow should be us
 * `git merge master` - Merge any changes from the master.
 * Commit and push any changes if necessary.
 * Create a pull request for your feature into the master branch.
-
+<br>
+<br>
 # Deployment
 ## Staging
 Deployment to the `ssmith-ushort-staging` application on Heroku is done by pushing to the `release` branch. The following steps should be taken.
