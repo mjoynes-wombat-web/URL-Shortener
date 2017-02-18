@@ -18,6 +18,10 @@ app.use(bodyParser.urlencoded({
 // Pull in routes from api.js v1 and set their root url to api/v1.
 app.use('/', require('./routes')(express));
 
+app.get('/', (req, res) => {
+  res.status(307).redirect('/api/v1/urls');
+});
+
 // Setup server to run on the configured port and console out success.
 module.exports = app.listen(port, () => {
   log.debug({
