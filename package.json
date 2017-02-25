@@ -1,6 +1,6 @@
 {
   "name": "url-shortener",
-  "version": "1.8.16",
+  "version": "1.8.17",
   "description": "An API that shortens a user provide URL.",
   "main": "server.js",
   "scripts": {
@@ -31,6 +31,7 @@
     "mocha": "^3.2.0",
     "nock": "^9.0.5",
     "rewire": "^2.5.2",
+    "run-sequence": "^1.2.2",
     "sinon": "^1.17.7",
     "supertest": "^3.0.0",
     "yargs": "^6.6.0"

@@ -5,6 +5,7 @@ const git = require('gulp-git');
 const gitignore = require('gulp-gitignore');
 const argv = require('yargs').argv;
 const fs = require('fs');
+const runSequence = require('run-sequence');
 
 // Task Global Vars.
 const src = gulp.src('./*').pipe(gitignore());  // Git files without .gitignore files.
@@ -59,6 +60,8 @@ gulp.task('push', () => { // Task to push to git. Must pass a -b value to specif
   git.push('origin', argv.b, { args: ' --tags' }, (err) => { if (err) throw err; });
 });
 
-gulp.task('release', ['updateVer', 'addCommit', 'tag', 'push']); // Creates a tagged push. Must
+gulp.task('release', () => {
+  runSequence('updateVer', 'addCommit', 'tag', 'push');
+}); // Creates a tagged push. Must
 // pass a -b value to specify the branch. Must pass -r to determine the release and version
 // incrementation. Can pass -vm for a version message and a -m for a commit message.
