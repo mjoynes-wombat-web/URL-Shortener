@@ -1,4 +1,4 @@
-# URL Shortener - Version 1.10.0
+# URL Shortener - Version 1.11.2
 This URL shortener creates a unique shortened URL based on a randomly generated string from Math.random();
 <br>
 <br>
