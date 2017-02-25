@@ -55,4 +55,4 @@ gulp.task('push', () => {
   git.push();
 })
 
-gulp.task('release', ['updateVer', 'tag', 'addCommit', 'push']);
+gulp.task('release', ['updateVer', 'addCommit', 'tag','push']);
