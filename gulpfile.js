@@ -41,7 +41,7 @@ gulp.task('addCommit', ['add', 'commit']);
 
 gulp.task('tag', () => {
   if (argv.m) {
-    git.tag(version, argv.v, (err) => { if (err) throw err; });
+    git.tag(version, argv.m, (err) => { if (err) throw err; });
     return `Added tag ${version} with message ${argv.v}.`;
   } else if (argv.vm) {
     git.tag(version, argv.vm, (err) => { if (err) throw err; });
