@@ -52,7 +52,7 @@ gulp.task('tag', () => {
 });
 
 gulp.task('push', () => {
-  git.push('origin', argv.b);
+  git.push('origin', argv.b, (err) => { if (err) throw err });
 })
 
 gulp.task('release', ['updateVer', 'addCommit', 'tag','push']);

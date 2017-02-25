@@ -1,6 +1,6 @@
 {
   "name": "url-shortener",
-  "version": "1.8.8",
+  "version": "1.8.9",
   "description": "An API that shortens a user provide URL.",
   "main": "server.js",
   "scripts": {
