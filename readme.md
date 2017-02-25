@@ -215,6 +215,7 @@ When adding features to the URL Shorter the feature branch workflow should be us
 * Create a pull request for your feature into the master branch.
 <br>
 <br>
+
 ## Versioning
 When making modifications to the code [symantic versioning](https://www.sitepoint.com/semantic-versioning-why-you-should-using/ "Semantic Versioning: Why Should Be Using it. - Sitepoint") should be used to tag the changes.
 
