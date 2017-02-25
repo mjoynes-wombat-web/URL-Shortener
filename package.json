@@ -1,6 +1,6 @@
 {
   "name": "url-shortener",
-  "version": "1.8.0",
+  "version": "1.8.18",
   "description": "An API that shortens a user provide URL.",
   "main": "server.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.2",
-    "debug-tool-express": "^1.0.4",
+    "debug-tool-express": "^1.1.4",
     "dotenv": "^4.0.0",
     "express": "^4.14.0",
     "mysql": "^2.11.1",
@@ -24,11 +24,16 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.9.0",
+    "gulp": "^3.9.1",
+    "gulp-git": "^2.0.0",
+    "gulp-gitignore": "^0.1.0",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "nock": "^9.0.5",
     "rewire": "^2.5.2",
+    "run-sequence": "^1.2.2",
     "sinon": "^1.17.7",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0",
+    "yargs": "^6.6.0"
   }
 }
