@@ -60,8 +60,8 @@ gulp.task('push', () => { // Task to push to git. Must pass a -b value to specif
   git.push('origin', argv.b, { args: ' --tags' }, (err) => { if (err) throw err; });
 });
 
-gulp.task('release', () => {
-  runSequence('updateVer', 'addCommit', 'tag', 'push');
-}); // Creates a tagged push. Must
-// pass a -b value to specify the branch. Must pass -r to determine the release and version
+gulp.task('release', () => { // Creates a tagged push.
+// Must pass a -b value to specify the branch. Must pass -r to determine the release and version
 // incrementation. Can pass -vm for a version message and a -m for a commit message.
+  runSequence('updateVer', 'addCommit', 'tag', 'push');
+});
