@@ -12,7 +12,8 @@ const pkg = JSON.parse(fs.readFileSync('./package.json')); // Package.JSON file 
 
 gulp.task('add', () => src.pipe(git.add())); // Task to dd all changed files to git.
 
-gulp.task('commit', () => { // Task to commit all files to get. Passing -m with a string adds a message.
+gulp.task('commit', () => { // Task to commit all files to get. Passing -m with a string adds a
+// message.
   if (argv.m) { // If -m is passed use it.
     src.pipe(git.commit(argv.m));
     return `Commit successful with message ${argv.m}`;
@@ -35,9 +36,11 @@ gulp.task('updateVer', () => { // Task to update the version in the package.JSON
   }
 });
 
-gulp.task('addCommit', ['add', 'commit']); // Task to add and commit all files. -m can be used to pass a message here.
+gulp.task('addCommit', ['add', 'commit']); // Task to add and commit all files. -m can be used to
+// pass a message here.
 
-gulp.task('tag', () => { // Task to tag the current state with the version number.
+gulp.task('tag', () => { // Task to tag the current state with the version number. Can be passed a
+// -vm version message.
   if (argv.vm) { // If there was a -vm version message passed use it.
     // Tag git with the version and the -vm message.
     git.tag(pkg.version, argv.vm, (err) => { if (err) throw err; });
@@ -47,12 +50,15 @@ gulp.task('tag', () => { // Task to tag the current state with the version numbe
     git.tag(pkg.version, argv.m, (err) => { if (err) throw err; });
     return `Added tag ${pkg.version} with message ${argv.m}.`;
   }
+  // If there was no -vm or -m message then tag with the default message.
   git.tag(pkg.version, `Added version ${pkg.version} tag.`, (err) => { if (err) throw err; });
   return `Added tag ${pkg.version}`;
 });
 
-gulp.task('push', () => {
+gulp.task('push', () => { // Task to push to git. Must pass a -b value to specify the branch.
   git.push('origin', argv.b, { args: ' --tags' }, (err) => { if (err) throw err; });
 });
 
-gulp.task('release', ['updateVer', 'addCommit', 'tag', 'push']);
+gulp.task('release', ['updateVer', 'addCommit', 'tag', 'push']); // Creates a tagged push. Must
+// pass a -b value to specify the branch. Must pass -r to determine the release and version
+// incrementation. Can pass -vm for a version message and a -m for a commit message.
