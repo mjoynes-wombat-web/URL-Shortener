@@ -22,7 +22,7 @@ gulp.task('commit', () => {
     src.pipe(git.commit(argv.m));
     return `Commit successful with message ${argv.m}`;
   }
-  src.pipe(git.commit('Revisions.'));
+  src.pipe(git.commit('Revisions added.'));
   return 'Commit successful without message.';
 });
 
