@@ -1,4 +1,4 @@
-# URL Shortener - Version 1.8.0
+# URL Shortener - Version 1.10.0
 This URL shortener creates a unique shortened URL based on a randomly generated string from Math.random();
 <br>
 <br>
@@ -215,6 +215,13 @@ When adding features to the URL Shorter the feature branch workflow should be us
 * Create a pull request for your feature into the master branch.
 <br>
 <br>
+
+## Versioning
+When making modifications to the code [symantic versioning](https://www.sitepoint.com/semantic-versioning-why-you-should-using/ "Semantic Versioning: Why Should Be Using it. - Sitepoint") should be used to tag the changes.
+
+### Gulp Release
+To tag, add and commit changes to a version run `gulp release -r <version-type> -b <branch>`, where you use `patch`, `minor` or `major` as the `<version-type>` and replcae `<branch>` with the branch. You can add a commit message with `-m 'Commit Message'` and `-vm 'Version Message'` for a version message. If no `-vm` is defined it will default to the `-m` message.
+
 # Deployment
 ## Staging
 Deployment to the `ssmith-ushort-staging` application on Heroku is done by pushing to the `release` branch. The following steps should be taken.
