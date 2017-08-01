@@ -110,6 +110,7 @@ Accessing this endpoint will return all of the shortened URLs.
 ```
 <br>
 <br>
+
 ## Accessing URL by ID.
 ##### [`GET http://localhost:3000/api/v1/urls/:id`]
 
@@ -135,6 +136,7 @@ By replacing `:id` in the GET URL you can retrieve a URL by its ID.
 ```
 <br>
 <br>
+
 ## Updating URL by ID.
 ##### [`POST http://localhost:3000/api/v1/urls/:id`]
 
@@ -165,6 +167,7 @@ By replacing `:id` in the POST URL you can pass a URL to this address and update
 ```
 <br>
 <br>
+
 ## Deleting URL by ID.
 ##### [`DELETE http://localhost:3000/api/v1/urls/:id`]
 
@@ -187,6 +190,7 @@ By replacing `:id` in the DELETE URL you can delete the URL with that ID.
 ```
 <br>
 <br>
+
 # GO Route Access
 ## Accessing a shortened URL.
 #### [`http://localhost:3000/go/:shortenedURL`]
@@ -196,11 +200,13 @@ By replacing `:shortenedURL` with one of the shortened URLs you will be redirect
 <br>
 <br>
 <br>
+
 # Code Styling
 ## AirBnb JavaScript
 This projected follows the AirBnb Javascript styling conventions. Their documentation can be found at [https://github.com/airbnb/javascript](https://github.com/airbnb/javascript "AirBnb JavaScript Style Guide").
 <br>
 <br>
+
 # Workflow
 ## Using Feature Branches
 When adding features to the URL Shorter the feature branch workflow should be used. This means the following steps should be taken.
